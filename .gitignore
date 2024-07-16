@@ -2,4 +2,8 @@ node_modules
 .DS_Store
 dist
 .vscode/*
-.DS_Store
+*.sqlite
+*.sqlite3
+*.db
+*.sqlite3-journal
+*.sqlite-journal

@@ -1,7 +1,49 @@
-.searchInput {
-  margin: 8px;
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid rgb(224, 224, 224);
+.searchbar {
+  width: 100%;
   background-color: rgb(241, 243, 244);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.searchbarButton {
+  border: none;
+  background-color: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 11px;
+  margin: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.searchbarSvg {
+  width: 24px;
+  height: 24px;
+  fill: rgb(95, 99, 104);
+}
+
+.searchbarButton:hover {
+  background-color: rgba(60, 64, 67, 0.08);
+}
+
+.searchInput {
+  font-family: 'Outfit';
+  font-size: 16px;
+  font-weight: 400;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: inherit;
+  border: none;
+  width: 100%;
+  max-width: 600px;
+  width: 600px;
+}
+
+.searchInput:focus {
+  outline: none;
 }
