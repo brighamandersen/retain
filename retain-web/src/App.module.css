@@ -1,0 +1,89 @@
+.section {
+  margin: 1rem;
+  margin-bottom: 3rem;
+}
+
+.sectionHeader {
+  color: rgb(95, 99, 104);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin: 32px;
+  margin-bottom: 8px;
+}
+
+.noNotesMessage {
+  color: rgb(32, 33, 36);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 28px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.noteCreateCard {
+  margin: 16px;
+  margin-top: 32px;
+  border-radius: 8px;
+  border: 1px solid rgb(224, 224, 224);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px 0px;
+}
+
+.noteCreateCardTitle {
+  border-radius: inherit;
+  border: none;
+  color: #202124;
+  font-family: 'Outfit';
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  line-height: 24px;
+  min-height: 38px;
+  outline: none;
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 100%;
+}
+
+.noteCreateCardContent {
+  border: none;
+  color: rgb(32, 33, 36);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  line-height: 20px;
+  min-height: 46px;
+  outline: none;
+  padding: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+  width: 100%;
+}
+
+.noteViewCard {
+  border-radius: 8px;
+  border: 1px solid rgb(224, 224, 224);
+  margin: 16px;
+  color: rgb(32, 33, 36);
+  cursor: pointer;
+}
+
+.noteViewCard:hover {
+  border-color: rgb(151, 151, 151);
+}
+
+.noteViewCardTitle {
+  padding: 12px 16px 0px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Outfit';
+}
+
+.noteViewCardContent {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 12px 16px;
+}

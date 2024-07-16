@@ -1,0 +1,25 @@
+:root {
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  margin: 0px;
+  padding: 0px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0px;
+}
+
+body {
+  color: #202124;
+}
+
+main {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 600px;
+}

@@ -1,0 +1,31 @@
+{
+  "name": "retain-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/app.ts",
+    "dev": "nodemon src/app.ts",
+    "build": "npx tsc",
+    "db:cli": "sqlite3 db.sqlite3",
+    "db:gui": "open db.sqlite3",
+    "db:seed": "ts-node prisma/seed.ts",
+    "db:studio": "npx prisma studio"
+  },
+  "author": "Brigham Andersen",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.16.2",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.11",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "nodemon": "^3.1.4",
+    "prisma": "^5.16.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  }
+}
