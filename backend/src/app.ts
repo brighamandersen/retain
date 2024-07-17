@@ -35,7 +35,11 @@ app.post('/notes', async (req, res) => {
 
 app.get('/notes', async (_req, res) => {
   try {
-    const allNotes = await prisma.note.findMany();
+    const allNotes = await prisma.note.findMany({
+      orderBy: {
+        createTimestamp: 'desc'
+      }
+    });
     res.send(allNotes);
   } catch (error) {
     console.error('Error getting all notes:', error);
