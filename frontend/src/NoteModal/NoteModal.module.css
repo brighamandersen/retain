@@ -16,14 +16,6 @@
   border-radius: 8px;
   max-width: 550px;
   width: 100%;
-  transform: scale(0.95);
-  opacity: 0;
-  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
-}
-
-.overlay .noteModalOpen {
-  transform: scale(1);
-  opacity: 1;
 }
 
 .editNoteTitle {

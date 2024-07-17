@@ -34,10 +34,7 @@ function NoteModal(props: NoteModalProps) {
 
   return (
     <div className={styles.overlay} onClick={handleOverlayClick}>
-      {/* <div className={styles.noteModal}> */}
-      <div
-        className={`${styles.noteModal} ${isOpen ? styles.noteModalOpen : ''}`}
-      >
+      <div className={styles.noteModal}>
         <input
           type='text'
           className={styles.editNoteTitle}

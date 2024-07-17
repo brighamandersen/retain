@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { API_BASE_URL } from './constants';
 import AutoResizingTextarea from './AutoResizingTextarea';
 import NoteToolbar from './NoteToolbar';
+import NoNotesEmptyState from './NoNotesEmptyState';
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -160,8 +161,9 @@ function App() {
             />
           </div>
         )}
-        {!searchText && <div className={styles.sectionHeader}>Others</div>}
-        {filteredNotes.length === 0 ? (
+        {notes.length === 0 ? (
+          <NoNotesEmptyState />
+        ) : searchText && filteredNotes.length === 0 ? (
           <div className={styles.noNotesMessage}>No matching results.</div>
         ) : (
           filteredNotes.map((note) => (
