@@ -8,6 +8,7 @@ import { API_BASE_URL } from './constants';
 import AutoResizingTextarea from './AutoResizingTextarea';
 import NoteToolbar from './NoteToolbar';
 import NoNotesEmptyState from './NoNotesEmptyState';
+import Toast from './Toast';
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -189,6 +190,7 @@ function App() {
         originalNote={noteOpen}
         saveNoteEdits={saveNoteEdits}
       />
+      <Toast />
     </Fragment>
   );
 }

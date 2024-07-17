@@ -1,0 +1,35 @@
+.toastContainer {
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+  padding: 14px;
+  padding-left: 24px;
+  background-color: rgb(50, 50, 50);
+  color: white;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 2px 0px;
+  font-size: 14px;
+  margin-top: 10px;
+  width: 452px;
+  display: flex;
+  align-items: center;
+}
+
+.toastText {
+  font-size: 14px;
+  line-height: 22.4px;
+  flex-grow: 1;
+}
+
+.toastCloseSvgButton {
+  fill: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.toastCloseSvgButton:hover {
+  cursor: pointer;
+  opacity: 0.87;
+  background-color: rgba(95, 99, 104, 0.157);
+}

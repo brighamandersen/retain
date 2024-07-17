@@ -1,6 +1,7 @@
 import styles from './Navbar.module.css';
 import retainIconPng from '../assets/retain-icon.png';
 import { useRef } from 'react';
+import SyncStatusButton from '../SyncStatusButton';
 
 interface NavbarProps {
   isFetchingNotes: boolean;
@@ -29,7 +30,7 @@ function Navbar(props: NavbarProps) {
           alignItems: 'center',
           gap: 8,
           cursor: 'pointer',
-          width: '100%'
+          flex: 1
         }}
         onClick={() => setSearchText('')}
       >
@@ -37,7 +38,11 @@ function Navbar(props: NavbarProps) {
         <p style={{ fontSize: 22, color: 'rgb(95, 99, 104)' }}>Retain</p>
       </div>
       <div className={styles.searchbar}>
-        <button className={styles.searchbarButton}>
+        <button
+          aria-label='Search'
+          className={styles.searchbarButton}
+          title='Search'
+        >
           <svg
             focusable='false'
             viewBox='0 0 24 24'
@@ -54,32 +59,37 @@ function Navbar(props: NavbarProps) {
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <button
-          className={styles.searchbarButton}
-          onClick={() => {
-            setSearchText('');
-            searchbarRef.current?.focus();
-          }}
-        >
-          <svg
-            focusable='false'
-            viewBox='0 0 24 24'
-            className={styles.searchbarSvg}
+        {searchText && (
+          <button
+            aria-label='Clear search'
+            className={styles.searchbarButton}
+            onClick={() => {
+              setSearchText('');
+              searchbarRef.current?.focus();
+            }}
+            title='Clear search'
           >
-            <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'></path>
-          </svg>
-        </button>
+            <svg
+              focusable='false'
+              viewBox='0 0 24 24'
+              className={styles.searchbarSvg}
+            >
+              <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'></path>
+            </svg>
+          </button>
+        )}
       </div>
       <div
         style={{
-          width: '100%',
           display: 'flex',
-          justifyContent: 'flex-end'
+          justifyContent: 'flex-end',
+          flex: 1
         }}
       >
-        <button disabled={isFetchingNotes} onClick={fetchNotes}>
-          {isFetchingNotes ? 'Loading' : 'Refresh'}
-        </button>
+        <SyncStatusButton
+          isSyncing={isFetchingNotes}
+          performSync={fetchNotes}
+        />
       </div>
     </nav>
   );
