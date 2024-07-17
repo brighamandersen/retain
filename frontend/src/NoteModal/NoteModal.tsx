@@ -46,6 +46,7 @@ function NoteModal(props: NoteModalProps) {
               updateTimestamp: dayjs().unix()
             }));
           }}
+          placeholder='Title'
         />
         <AutoResizingTextarea
           className={styles.editNoteContent}
@@ -57,6 +58,7 @@ function NoteModal(props: NoteModalProps) {
               updateTimestamp: dayjs().unix()
             }));
           }}
+          placeholder='Note'
         />
         <div
           style={{
