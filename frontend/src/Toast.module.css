@@ -10,7 +10,7 @@
   box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 2px 0px;
   font-size: 14px;
   margin-top: 10px;
-  width: 452px;
+  width: 400px;
   display: flex;
   align-items: center;
 }
@@ -21,15 +21,24 @@
   flex-grow: 1;
 }
 
-.toastCloseSvgButton {
+.toastCloseSvg {
   fill: white;
   width: 24px;
   height: 24px;
   border-radius: 50%;
 }
 
-.toastCloseSvgButton:hover {
+.toastCloseSvg:hover {
   cursor: pointer;
   opacity: 0.87;
   background-color: rgba(95, 99, 104, 0.157);
+}
+
+.toastCloseButton {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
