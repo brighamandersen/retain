@@ -1,5 +1,5 @@
 import styles from './Navbar.module.css';
-import keepIconPng from '../assets/keep-icon.png';
+import retainIconPng from '../assets/retain-icon.png';
 import { useRef } from 'react';
 
 interface NavbarProps {
@@ -33,8 +33,8 @@ function Navbar(props: NavbarProps) {
         }}
         onClick={() => setSearchText('')}
       >
-        <img src={keepIconPng} alt='Keep icon' width={40} height={40} />
-        <p style={{ fontSize: 22, color: 'rgb(95, 99, 104)' }}>Keep</p>
+        <img src={retainIconPng} alt='Retain icon' width={40} height={40} />
+        <p style={{ fontSize: 22, color: 'rgb(95, 99, 104)' }}>Retain</p>
       </div>
       <div className={styles.searchbar}>
         <button className={styles.searchbarButton}>
