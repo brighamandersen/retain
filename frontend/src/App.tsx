@@ -16,16 +16,6 @@ function App() {
   const [isFetchingNotes, setIsFetchingNotes] = useState(false);
   const [searchText, setSearchText] = useState('');
 
-  // // Optimistically update locally
-  // function createNoteLocal(noteDraft: Note) {
-  //   if (!noteDraft.id) {
-  //     // Inserting a temp id if it doesn't exist, which will be overwritten on refetch
-  //     noteDraft.id = uuidv4();
-  //   }
-
-  //   setNotes([...notes, { ...noteDraft }]);
-  // }
-
   // Create note
   const createNote = async (noteToCreate: Note) => {
     const tempId = uuidv4(); // Will be replaced with refetch
@@ -109,8 +99,8 @@ function App() {
   // Filtering
   const filteredNotes = notes.filter(
     (note) =>
-      (note.title ?? '').toLowerCase().includes(searchText.toLowerCase()) ||
-      note.content.toLowerCase().includes(searchText.toLowerCase())
+      (note?.title ?? '').toLowerCase().includes(searchText.toLowerCase()) ||
+      (note?.content ?? '').toLowerCase().includes(searchText.toLowerCase())
   );
 
   useEffect(() => {
@@ -165,7 +155,7 @@ function App() {
         {notes.length === 0 ? (
           <NoNotesEmptyState />
         ) : searchText && filteredNotes.length === 0 ? (
-          <div className={styles.noNotesMessage}>No matching results.</div>
+          <div className={styles.noNotesFoundText}>No matching results.</div>
         ) : (
           filteredNotes.map((note) => (
             <div
