@@ -1,8 +1,8 @@
 import styles from './NoteModal.module.css';
 import { Note } from '../types';
-import AutoResizingTextarea from '../AutoResizingTextarea';
+import AutoResizingTextarea from '../components/AutoResizingTextarea';
 import dayjs from 'dayjs';
-import NoteToolbar from '../NoteToolbar';
+import NoteToolbar from '../components/NoteToolbar';
 import { useEffect, useState } from 'react';
 
 interface NoteModalProps {
@@ -23,7 +23,6 @@ function NoteModal(props: NoteModalProps) {
   }, [originalNote]);
 
   if (!isOpen || !originalNote) return null;
-  console.log({ noteDraft: noteDraft?.content });
 
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     // Only close the modal if the overlay is clicked, not the modal itself

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import styles from './Toast.module.css';
 
 function Toast() {
   const [isVisible, setIsVisible] = useState(false);
@@ -11,15 +10,15 @@ function Toast() {
   if (!isVisible) return null;
 
   return (
-    <div className={styles.toastContainer}>
-      <div className={styles.toastText}>Toast</div>
+    <div className='toast-container'>
+      <div className='toast-text'>Toast</div>
       <button
         aria-label='Close'
-        className={styles.toastCloseButton}
+        className='toast-close-button'
         onClick={handleClose}
         title='Close'
       >
-        <svg viewBox='0 0 18 18' className={styles.toastCloseSvg}>
+        <svg viewBox='0 0 18 18' className='toast-close-svg'>
           <path d='m14.53 4.53l-1.06-1.06-4.47 4.47-4.47-4.47-1.06 1.06 4.47 4.47-4.47 4.47 1.06 1.06 4.47-4.47 4.47 4.47 1.06-1.06-4.47-4.47z' />
         </svg>
       </button>

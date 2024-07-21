@@ -18,8 +18,303 @@ body {
   color: #202124;
 }
 
-main {
+/* AutoResizingTextarea */
+
+.auto-resizing-textarea {
+  resize: none;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+/* LoadingSpinner */
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  border: 2px solid transparent;
+  border-top: 2px solid rgb(95, 99, 104);
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  animation: spin 1s linear infinite;
+}
+
+/* Navbar */
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 8px;
+}
+
+.navbar-left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.navbar-title-text {
+  font-size: 22px;
+  color: rgb(95, 99, 104);
+}
+
+.navbar-searchbar {
+  max-width: 600px;
+  width: 100%;
+  background-color: rgb(241, 243, 244);
+  border-radius: 8px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.navbar-searchbar-input {
+  font-family: 'Outfit';
+  font-size: 16px;
+  font-weight: 400;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: inherit;
+  border: none;
+  width: 100%;
+}
+
+.navbar-searchbar-input:focus {
+  outline: none;
+}
+
+.navbar-searchbar-svg {
+  width: 24px;
+  height: 24px;
+  fill: rgb(95, 99, 104);
+}
+
+.navbar-searchbar-button {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 11px;
+  margin: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.navbar-searchbar-button:hover {
+  background-color: rgba(60, 64, 67, 0.08);
+}
+
+.navbar-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+}
+
+/* NoNotesEmptyState */
+
+.no-notes-empty-state-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 80px;
+}
+
+.no-notes-empty-state-svg {
+  color: rgb(32, 33, 36);
+  height: 120px;
+  width: 120px;
+  opacity: 0.1;
+  margin: 20px;
+}
+
+.no-notes-empty-state-text {
+  color: rgb(95, 99, 104);
+  font-family: 'Outfit';
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+/* NoteToolbar */
+
+.note-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.note-toolbar-button {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  padding: 8px;
+  padding-left: 24px;
+  padding-right: 24px;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.note-toolbar-button:hover {
+  background-color: rgba(95, 99, 104, 0.039);
+}
+
+/* NoteViewCard */
+
+.note-view-card {
+  border-radius: 8px;
+  border: 1px solid rgb(224, 224, 224);
+  margin: 16px;
+  color: rgb(32, 33, 36);
+  cursor: pointer;
+}
+
+.note-view-card:hover {
+  border-color: rgb(151, 151, 151);
+}
+
+.note-view-card-title {
+  padding: 12px 16px 0px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Outfit';
+}
+
+.note-view-card-content {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 12px 16px;
+}
+
+/* SyncStatusButton */
+
+.sync-status-button {
+  border: none;
+  background-color: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  width: 48px;
+}
+
+.sync-status-button:hover {
+  background-color: rgba(60, 64, 67, 0.08);
+}
+
+.sync-status-button:hover .refresh-svg {
+  fill: black;
+}
+
+.refresh-svg {
+  width: 24px;
+  height: 24px;
+  fill: rgb(95, 99, 104);
+}
+
+/* Toast */
+
+.toast-container {
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+  padding: 14px;
+  padding-left: 24px;
+  background-color: rgb(50, 50, 50);
+  color: white;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 2px 0px;
+  font-size: 14px;
+  margin-top: 10px;
+  width: 400px;
+  display: flex;
+  align-items: center;
+}
+
+.toast-text {
+  font-size: 14px;
+  line-height: 22.4px;
+  flex-grow: 1;
+}
+
+.toast-close-svg {
+  fill: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.toast-close-svg:hover {
+  cursor: pointer;
+  opacity: 0.87;
+  background-color: rgba(95, 99, 104, 0.157);
+}
+
+.toast-close-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Misc */
+
+.main-content {
   margin: 0 auto;
   width: 100%;
   max-width: 600px;
+}
+
+.no-matching-results-text {
+  color: rgb(32, 33, 36);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 28px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.sidebar-container {
+}
+
+.sidebar {
+  /* display: flex; */
+  /* flex-direction: column; */
+}
+
+.sidebar-svg {
+  fill: #202124;
+  /* padding-left: 12px; */
+  /* padding-right: 12px; */
+  width: 24px;
+  height: 24px;
+}
+
+.sidebar-button {
+  background-color: #feefc3;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: block;
+  margin-left: 12px;
 }

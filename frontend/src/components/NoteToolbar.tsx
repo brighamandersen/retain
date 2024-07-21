@@ -1,5 +1,3 @@
-import styles from './NoteToolbar.module.css';
-
 interface NoteToolbarProps {
   onSaveClick?(): void;
   onDeleteClick?(): void;
@@ -10,25 +8,25 @@ function NoteToolbar(props: NoteToolbarProps) {
   const { onSaveClick, onDeleteClick, onCloseClick } = props;
 
   return (
-    <div className={styles.toolbar}>
+    <div className='note-toolbar'>
       {onSaveClick && (
         <button
           type='button'
-          className={styles.transparentButton}
+          className='note-toolbar-button'
           onClick={onSaveClick}
         >
           Save
         </button>
       )}
       {onDeleteClick && (
-        <button className={styles.transparentButton} onClick={onDeleteClick}>
+        <button className='note-toolbar-button' onClick={onDeleteClick}>
           Delete
         </button>
       )}
       {onCloseClick && (
         <button
           type='button'
-          className={styles.transparentButton}
+          className='note-toolbar-button'
           onClick={onCloseClick}
         >
           Close

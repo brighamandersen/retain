@@ -1,8 +1,7 @@
 import React from 'react';
-import styles from './LoadingSpinner.module.css';
 
 const LoadingSpinner: React.FC = () => {
-  return <div className={styles.loadingSpinner} />;
+  return <div className='loading-spinner' />;
 };
 
 export default LoadingSpinner;
