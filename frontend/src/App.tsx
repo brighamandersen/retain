@@ -145,10 +145,10 @@ function Home() {
         <div className='main-content'>
           <Outlet />
           {!searchText && (
-            <div className={styles.noteCreateCard}>
+            <div className='note-create-card-container'>
               <input
                 type='text'
-                className={styles.noteCreateCardTitle}
+                className='note-create-card-title'
                 value={newNote.title}
                 onChange={(e) =>
                   setNewNote((prevNewNote) => ({
@@ -159,7 +159,7 @@ function Home() {
                 placeholder='Title'
               />
               <AutoResizingTextarea
-                className={styles.noteCreateCardContent}
+                className='note-create-card-content'
                 value={newNote.content}
                 onChange={(e) =>
                   setNewNote((prevNewNote) => ({
