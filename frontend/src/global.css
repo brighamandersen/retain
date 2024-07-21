@@ -18,6 +18,18 @@ body {
   color: #202124;
 }
 
+button {
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+input,
+textarea {
+  border: none;
+  outline: none;
+}
+
 /* AutoResizingTextarea */
 
 .auto-resizing-textarea {
@@ -86,12 +98,7 @@ body {
   padding-top: 10px;
   padding-bottom: 10px;
   background-color: inherit;
-  border: none;
   width: 100%;
-}
-
-.navbar-searchbar-input:focus {
-  outline: none;
 }
 
 .navbar-searchbar-svg {
@@ -102,9 +109,7 @@ body {
 
 .navbar-searchbar-button {
   background-color: transparent;
-  border: none;
   border-radius: 50%;
-  cursor: pointer;
   padding: 11px;
   margin: 3px;
   display: flex;
@@ -151,6 +156,53 @@ body {
   line-height: 28px;
 }
 
+/* NoteModal */
+
+.note-modal-overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.218s ease-in;
+}
+
+.note-modal-card {
+  background: white;
+  border-radius: 8px;
+  max-width: 550px;
+  width: 100%;
+}
+
+.note-modal-edit-note-title {
+  color: #202124;
+  padding: 15px;
+  padding-top: 16px;
+  padding-bottom: 12px;
+  font-size: 22px;
+  font-family: 'Outfit';
+  border-radius: inherit;
+  line-height: 28px;
+  min-height: 43px;
+  width: 100%;
+}
+
+.note-modal-edit-note-content {
+  color: rgb(32, 33, 36);
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 24px;
+  min-height: 46px;
+  padding: 16px;
+  padding-top: 4px;
+  padding-bottom: 12px;
+  width: 100%;
+}
+
 /* NoteToolbar */
 
 .note-toolbar {
@@ -160,8 +212,6 @@ body {
 
 .note-toolbar-button {
   background-color: transparent;
-  cursor: pointer;
-  border: none;
   border-radius: 4px;
   padding: 8px;
   padding-left: 24px;
@@ -205,10 +255,8 @@ body {
 /* SyncStatusButton */
 
 .sync-status-button {
-  border: none;
   background-color: transparent;
   border-radius: 50%;
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -263,15 +311,12 @@ body {
 }
 
 .toast-close-svg:hover {
-  cursor: pointer;
   opacity: 0.87;
   background-color: rgba(95, 99, 104, 0.157);
 }
 
 .toast-close-button {
-  border: none;
   background-color: transparent;
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -305,7 +350,6 @@ body {
 
 .note-create-card-title {
   border-radius: inherit;
-  border: none;
   color: #202124;
   font-family: 'Outfit';
   font-size: 16px;
@@ -313,7 +357,6 @@ body {
   letter-spacing: 0.1px;
   line-height: 24px;
   min-height: 38px;
-  outline: none;
   padding: 10px;
   padding-left: 15px;
   padding-right: 15px;
@@ -321,7 +364,6 @@ body {
 }
 
 .note-create-card-content {
-  border: none;
   color: rgb(32, 33, 36);
   font-family: inherit;
   font-size: 14px;
@@ -329,7 +371,6 @@ body {
   letter-spacing: 0.2px;
   line-height: 20px;
   min-height: 46px;
-  outline: none;
   padding: 12px;
   padding-left: 16px;
   padding-right: 16px;
@@ -354,9 +395,7 @@ body {
 
 .sidebar-button {
   background-color: #feefc3;
-  border: none;
   border-radius: 50%;
-  cursor: pointer;
   display: block;
   margin-left: 12px;
 }

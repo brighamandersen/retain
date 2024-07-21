@@ -1,8 +1,7 @@
-import styles from './NoteModal.module.css';
-import { Note } from '../types';
-import AutoResizingTextarea from '../components/AutoResizingTextarea';
+import { Note } from './types';
+import AutoResizingTextarea from './AutoResizingTextarea';
 import dayjs from 'dayjs';
-import NoteToolbar from '../components/NoteToolbar';
+import NoteToolbar from './NoteToolbar';
 import { useEffect, useState } from 'react';
 
 interface NoteModalProps {
@@ -32,11 +31,11 @@ function NoteModal(props: NoteModalProps) {
   };
 
   return (
-    <div className={styles.overlay} onClick={handleOverlayClick}>
-      <div className={styles.noteModal}>
+    <div className='note-modal-overlay' onClick={handleOverlayClick}>
+      <div className='note-modal-card'>
         <input
           type='text'
-          className={styles.editNoteTitle}
+          className='note-modal-edit-note-title'
           value={noteDraft?.title}
           onChange={(e) => {
             setNoteDraft((prevNoteDraft: Note) => ({
@@ -48,7 +47,7 @@ function NoteModal(props: NoteModalProps) {
           placeholder='Title'
         />
         <AutoResizingTextarea
-          className={styles.editNoteContent}
+          className='note-modal-edit-note-content'
           value={noteDraft?.content}
           onChange={(e) => {
             setNoteDraft((prevNoteDraft: Note) => ({

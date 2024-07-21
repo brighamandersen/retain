@@ -1,4 +1,4 @@
-import retainIconPng from '../assets/retain-icon.png';
+import retainIconPng from './assets/retain-icon.png';
 import { useRef } from 'react';
 import SyncStatusButton from './SyncStatusButton';
 
@@ -16,7 +16,11 @@ function Navbar(props: NavbarProps) {
 
   return (
     <nav className='navbar-container'>
-      <div className='navbar-left' onClick={() => setSearchText('')}>
+      <div
+        className='navbar-left'
+        onClick={() => setSearchText('')}
+        role='button'
+      >
         <img src={retainIconPng} alt='Retain icon' width={40} height={40} />
         <p className='navbar-title-text'>Retain</p>
       </div>

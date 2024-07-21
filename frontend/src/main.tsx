@@ -1,21 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
 import './global.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './App.tsx';
-import Archive from './routes/Archive.tsx';
+import App from './App.tsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
-    children: [
-      {
-        path: '/archive',
-        element: <Archive />
-      }
-    ]
+    element: <App />
+    // children: [
+    //   {
+    //     path: '/archive',
+    //     element: <Archive />
+    //   },
+    // path: '/notes/:noteId',
+    // element: (
+    // <NotePage
+    // />
+    // )
+    // }
+    // ]
   }
 ]);
 
