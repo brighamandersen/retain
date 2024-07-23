@@ -4,4 +4,5 @@ export interface Note {
   content?: string;
   createTimestamp?: number; // Can be undefined for unsaved notes
   updateTimestamp?: number; // Can be undefined for unsaved notes
+  isArchived: boolean;
 }
