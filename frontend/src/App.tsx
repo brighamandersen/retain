@@ -135,57 +135,6 @@ function App() {
               openModal
             }}
           />
-          {/* {!searchText && (
-            <div className='note-create-card-container'>
-              <input
-                type='text'
-                className='note-create-card-title'
-                value={newNote.title}
-                onChange={(e) =>
-                  setNewNote((prevNewNote) => ({
-                    ...prevNewNote,
-                    title: e.target.value
-                  }))
-                }
-                placeholder='Title'
-              />
-              <AutoResizingTextarea
-                className='note-create-card-content'
-                value={newNote.content}
-                onChange={(e) =>
-                  setNewNote((prevNewNote) => ({
-                    ...prevNewNote,
-                    content: e.target.value
-                  }))
-                }
-                placeholder='Take a note...'
-              />
-              <NoteToolbar
-                onSaveClick={() => {
-                  createNote({
-                    title: newNote.title,
-                    content: newNote.content,
-                    isArchived: false
-                  });
-                  setNewNote(BLANK_NOTE);
-                }}
-              />
-            </div>
-          )}
-          {searchText && filteredNotes.length === 0 ? (
-            <div className='no-matching-results-text'>No matching results.</div>
-          ) : notes.length === 0 ? (
-            <NoNotesEmptyState />
-          ) : (
-            filteredNotes.map((note) => (
-              <NoteViewCard
-                key={note.id}
-                isOpen={note.id === noteOpenId}
-                note={note}
-                onClick={() => setNoteOpenId(note.id)}
-              />
-            ))
-          )} */}
         </div>
       </main>
       <NoteModal

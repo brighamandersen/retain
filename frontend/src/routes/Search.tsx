@@ -15,6 +15,10 @@ function Search() {
       (note?.content ?? '').toLowerCase().includes(query.toLowerCase())
   );
 
+  if (query && matchingNotes.length === 0) {
+    return <div className='no-matching-results-text'>No matching results.</div>;
+  }
+
   return (
     <div>
       {matchingNotes.map((note) => (
