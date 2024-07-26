@@ -40,7 +40,14 @@ function NoteModal(props: NoteModalProps) {
 
   return (
     <div className='note-modal-overlay' onClick={handleOverlayClick}>
-      <div className='note-modal-card'>
+      <form
+        className='note-modal-card'
+        onSubmit={(e) => {
+          e.preventDefault();
+          saveNoteEdits(noteDraft);
+          closeModal();
+        }}
+      >
         <input
           type='text'
           className='note-modal-edit-note-title'
@@ -100,12 +107,8 @@ function NoteModal(props: NoteModalProps) {
             deleteNote(originalNote.id!);
             closeModal();
           }}
-          onSaveClick={() => {
-            saveNoteEdits(noteDraft);
-            closeModal();
-          }}
         />
-      </div>
+      </form>
     </div>
   );
 }

@@ -12,26 +12,24 @@ function NoteCreateCard() {
 
   const createNoteFormRef = React.useRef<HTMLFormElement>(null);
 
-  const handleBlur = (event: React.FocusEvent<HTMLFormElement>) => {
-    if (
-      createNoteFormRef.current &&
-      !createNoteFormRef.current.contains(event.relatedTarget as Node)
-    ) {
-      console.log('ran');
-      if (newNote.title || newNote.content) {
-        handleSubmit();
-      }
-    }
-  };
-
   const handleSubmit = () => {
-    console.log('handleSubmit');
     createNote({
       title: newNote.title,
       content: newNote.content,
       isArchived: false
     });
     setNewNote(BLANK_NOTE);
+  };
+
+  const handleBlur = (event: React.FocusEvent<HTMLFormElement>) => {
+    if (
+      createNoteFormRef.current &&
+      !createNoteFormRef.current.contains(event.relatedTarget as Node)
+    ) {
+      if (newNote.title || newNote.content) {
+        handleSubmit();
+      }
+    }
   };
 
   return (
@@ -41,7 +39,6 @@ function NoteCreateCard() {
       onBlur={handleBlur}
       onSubmit={(e) => {
         e.preventDefault();
-        console.log('onSubmit');
         handleSubmit();
       }}
     >
@@ -68,11 +65,7 @@ function NoteCreateCard() {
         }
         placeholder='Take a note...'
       />
-      <NoteToolbar
-        onSaveClick={() => {
-          // handleSubmit();
-        }}
-      />
+      <NoteToolbar />
     </form>
   );
 }
