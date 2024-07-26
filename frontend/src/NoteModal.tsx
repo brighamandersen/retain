@@ -5,15 +5,23 @@ import NoteToolbar from './NoteToolbar';
 import { useEffect, useState } from 'react';
 
 interface NoteModalProps {
-  isOpen: boolean;
+  archiveNote: (noteId: string) => void;
   closeModal: () => void;
   deleteNote(noteId: string): void;
+  isOpen: boolean;
   originalNote: Note;
   saveNoteEdits(noteDraft: Note): void;
 }
 
 function NoteModal(props: NoteModalProps) {
-  const { isOpen, closeModal, deleteNote, originalNote, saveNoteEdits } = props;
+  const {
+    archiveNote,
+    closeModal,
+    deleteNote,
+    isOpen,
+    originalNote,
+    saveNoteEdits
+  } = props;
 
   const [noteDraft, setNoteDraft] = useState<Note>(originalNote);
 
@@ -83,6 +91,10 @@ function NoteModal(props: NoteModalProps) {
           )}
         </div>
         <NoteToolbar
+          onArchiveClick={() => {
+            archiveNote(originalNote.id!);
+            closeModal();
+          }}
           onCloseClick={closeModal}
           onDeleteClick={() => {
             deleteNote(originalNote.id!);

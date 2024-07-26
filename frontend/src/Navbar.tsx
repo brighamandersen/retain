@@ -1,26 +1,33 @@
 import retainIconPng from './assets/retain-icon.png';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { useHistory, useNavigate, useSearchParams } from 'react-router-dom';
+import React from 'react';
 import SyncStatusButton from './SyncStatusButton';
 
 interface NavbarProps {
   isFetchingNotes: boolean;
   fetchNotes: () => void;
-  searchText: string;
-  setSearchText: (searchText: string) => void;
 }
 
 function Navbar(props: NavbarProps) {
-  const { isFetchingNotes, fetchNotes, searchText, setSearchText } = props;
+  const { isFetchingNotes, fetchNotes } = props;
 
   const searchbarRef = useRef<HTMLInputElement>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('query') || '';
+
+  const navigate = useNavigate();
+
+  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    // Unfocus the searchbar when Enter is pressed
+    if (event.key === 'Enter' && searchbarRef.current) {
+      searchbarRef.current.blur();
+    }
+  }
 
   return (
     <nav className='navbar-container'>
-      <div
-        className='navbar-left'
-        onClick={() => setSearchText('')}
-        role='button'
-      >
+      <div className='navbar-left' onClick={() => navigate('/')} role='button'>
         <img src={retainIconPng} alt='Retain icon' width={40} height={40} />
         <p className='navbar-title-text'>Retain</p>
       </div>
@@ -29,6 +36,10 @@ function Navbar(props: NavbarProps) {
           aria-label='Search'
           className='navbar-searchbar-button'
           title='Search'
+          onClick={() => {
+            navigate('/search');
+            searchbarRef.current?.focus();
+          }}
         >
           <svg
             focusable='false'
@@ -43,18 +54,25 @@ function Navbar(props: NavbarProps) {
           className='navbar-searchbar-input'
           type='text'
           placeholder='Search'
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
+          name='text'
+          value={query}
+          onChange={(e) => {
+            navigate('/search');
+            const newQuery = e.target.value;
+            setSearchParams({ query: newQuery });
+          }}
+          onKeyDown={handleKeyDown}
         />
-        {searchText && (
+        {query && (
           <button
             aria-label='Clear search'
             className='navbar-searchbar-button'
             onClick={() => {
-              setSearchText('');
+              setSearchParams({ query: '' });
               searchbarRef.current?.focus();
             }}
             title='Clear search'
+            type='reset'
           >
             <svg
               focusable='false'

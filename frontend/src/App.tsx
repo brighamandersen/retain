@@ -2,27 +2,25 @@ import { Fragment, useEffect, useState } from 'react';
 import { Note } from './types';
 import NoteModal from './NoteModal';
 import { v4 as uuidv4 } from 'uuid';
-import { API_BASE_URL } from './constants';
+import { API_BASE_URL, BLANK_NOTE } from './constants';
 import AutoResizingTextarea from './AutoResizingTextarea';
 import Navbar from './Navbar';
 import NoNotesEmptyState from './NoNotesEmptyState';
 import NoteToolbar from './NoteToolbar';
 import NoteViewCard from './NoteViewCard';
 import Toast from './Toast';
+import Sidebar from './Sidebar';
+import { Outlet } from 'react-router-dom';
 
-function Home() {
+function App() {
   const [notes, setNotes] = useState<Note[]>([]);
-  const [newNote, setNewNote] = useState<Note>({ title: '', content: '' });
+  const [newNote, setNewNote] = useState<Note>(BLANK_NOTE);
   const [isFetchingNotes, setIsFetchingNotes] = useState(false);
-  const [searchText, setSearchText] = useState('');
 
   // Create note
   const createNote = async (noteToCreate: Note) => {
     const tempId = uuidv4(); // Will be replaced with refetch
-    setNotes([
-      ...notes,
-      { id: tempId, title: noteToCreate.title, content: noteToCreate.content }
-    ]); // Optimistic update
+    setNotes([...notes, { id: tempId, ...noteToCreate }]); // Optimistic update
 
     try {
       await fetch(`${API_BASE_URL}/notes`, {
@@ -53,6 +51,29 @@ function Home() {
       console.error(error);
     } finally {
       setIsFetchingNotes(false);
+    }
+  };
+
+  const archiveNote = async (noteId: string) => {
+    setNotes((prevNotes) =>
+      prevNotes.map((note) =>
+        note.id === noteId ? { ...note, isArchived: true } : note
+      )
+    );
+
+    try {
+      await fetch(`${API_BASE_URL}/notes/${noteId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          isArchived: true
+        })
+      });
+      fetchNotes(); // Refetch to ensure consistency
+    } catch (error) {
+      console.error('Failed to archive note:', error);
     }
   };
 
@@ -94,14 +115,8 @@ function Home() {
   const [noteOpenId, setNoteOpenId] = useState<string | null>();
   const noteOpen = notes.find((note) => note.id === noteOpenId) as Note;
   const isModalOpen = Boolean(noteOpenId);
+  const openModal = (noteId: string) => setNoteOpenId(noteId);
   const closeModal = () => setNoteOpenId(null);
-
-  // Filtering
-  const filteredNotes = notes.filter(
-    (note) =>
-      (note?.title ?? '').toLowerCase().includes(searchText.toLowerCase()) ||
-      (note?.content ?? '').toLowerCase().includes(searchText.toLowerCase())
-  );
 
   useEffect(() => {
     fetchNotes();
@@ -109,33 +124,18 @@ function Home() {
 
   return (
     <Fragment>
-      <Navbar
-        isFetchingNotes={isFetchingNotes}
-        fetchNotes={fetchNotes}
-        searchText={searchText}
-        setSearchText={setSearchText}
-      />
+      <Navbar isFetchingNotes={isFetchingNotes} fetchNotes={fetchNotes} />
       <main>
-        <aside className='sidebar-container'>
-          <div className='sidebar'>
-            <button aria-label='Notes' className='sidebar-svg' title='Notes'>
-              <svg className='sidebar-svg' viewBox='0 0 24 24'>
-                <path d='M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6A4.997 4.997 0 0 1 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z'></path>
-              </svg>
-            </button>
-            <button
-              aria-label='Archive'
-              className='sidebar-svg'
-              title='Archive'
-            >
-              <svg className='sidebar-svg' viewBox='0 0 24 24'>
-                <path d='M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM6.24 5h11.52l.83 1H5.42l.82-1zM5 19V8h14v11H5zm11-5.5l-4 4-4-4 1.41-1.41L11 13.67V10h2v3.67l1.59-1.59L16 13.5z'></path>
-              </svg>
-            </button>
-          </div>
-        </aside>
+        <Sidebar />
         <div className='main-content'>
-          {!searchText && (
+          <Outlet
+            context={{
+              createNote,
+              notes,
+              openModal
+            }}
+          />
+          {/* {!searchText && (
             <div className='note-create-card-container'>
               <input
                 type='text'
@@ -164,9 +164,10 @@ function Home() {
                 onSaveClick={() => {
                   createNote({
                     title: newNote.title,
-                    content: newNote.content
+                    content: newNote.content,
+                    isArchived: false
                   });
-                  setNewNote({ title: '', content: '' });
+                  setNewNote(BLANK_NOTE);
                 }}
               />
             </div>
@@ -184,13 +185,14 @@ function Home() {
                 onClick={() => setNoteOpenId(note.id)}
               />
             ))
-          )}
+          )} */}
         </div>
       </main>
       <NoteModal
-        isOpen={isModalOpen}
+        archiveNote={archiveNote}
         closeModal={closeModal}
         deleteNote={deleteNote}
+        isOpen={isModalOpen}
         originalNote={noteOpen}
         saveNoteEdits={saveNoteEdits}
       />
@@ -199,4 +201,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default App;

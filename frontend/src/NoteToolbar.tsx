@@ -1,21 +1,27 @@
 interface NoteToolbarProps {
-  onSaveClick?(): void;
-  onDeleteClick?(): void;
+  onArchiveClick?(): void;
   onCloseClick?(): void;
+  onDeleteClick?(): void;
+  onSaveClick?(): void;
 }
 
 function NoteToolbar(props: NoteToolbarProps) {
-  const { onSaveClick, onDeleteClick, onCloseClick } = props;
+  const { onArchiveClick, onCloseClick, onDeleteClick, onSaveClick } = props;
 
   return (
     <div className='note-toolbar'>
       {onSaveClick && (
         <button
-          type='button'
+          type='submit'
           className='note-toolbar-button'
           onClick={onSaveClick}
         >
           Save
+        </button>
+      )}
+      {onArchiveClick && (
+        <button className='note-toolbar-button' onClick={onArchiveClick}>
+          Archive
         </button>
       )}
       {onDeleteClick && (
