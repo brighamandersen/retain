@@ -10,13 +10,14 @@ function NoteCreateCard() {
 
   const [newNote, setNewNote] = useState<Note>(BLANK_NOTE);
 
-  const formRef = React.useRef<HTMLFormElement>(null);
+  const createNoteFormRef = React.useRef<HTMLFormElement>(null);
 
   const handleBlur = (event: React.FocusEvent<HTMLFormElement>) => {
     if (
-      formRef.current &&
-      !formRef.current.contains(event.relatedTarget as Node)
+      createNoteFormRef.current &&
+      !createNoteFormRef.current.contains(event.relatedTarget as Node)
     ) {
+      console.log('ran');
       if (newNote.title || newNote.content) {
         handleSubmit();
       }
@@ -24,6 +25,7 @@ function NoteCreateCard() {
   };
 
   const handleSubmit = () => {
+    console.log('handleSubmit');
     createNote({
       title: newNote.title,
       content: newNote.content,
@@ -35,14 +37,14 @@ function NoteCreateCard() {
   return (
     <form
       className='note-create-card-container'
-      ref={formRef}
+      ref={createNoteFormRef}
       onBlur={handleBlur}
       onSubmit={(e) => {
         e.preventDefault();
+        console.log('onSubmit');
         handleSubmit();
       }}
     >
-      {/* <div className='note-create-card-container'> */}
       <input
         type='text'
         className='note-create-card-title'
@@ -68,10 +70,9 @@ function NoteCreateCard() {
       />
       <NoteToolbar
         onSaveClick={() => {
-          handleSubmit();
+          // handleSubmit();
         }}
       />
-      {/* </div> */}
     </form>
   );
 }

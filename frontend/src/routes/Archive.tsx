@@ -5,6 +5,7 @@ import NoteViewCard from '../NoteViewCard';
 
 function Archive() {
   const { notes, openModal } = useOutletContext<{ notes: Note[] }>();
+
   const archivedNotes = notes.filter((note) => note.isArchived);
 
   return (
