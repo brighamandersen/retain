@@ -63,26 +63,28 @@ function Navbar(props: NavbarProps) {
           }}
           onKeyDown={handleKeyDown}
         />
-        {query && (
-          <button
-            aria-label='Clear search'
-            className='navbar-searchbar-button'
-            onClick={() => {
-              setSearchParams({ query: '' });
-              searchbarRef.current?.focus();
-            }}
-            title='Clear search'
-            type='reset'
+        <button
+          aria-label='Clear search'
+          className={
+            query
+              ? 'navbar-searchbar-button'
+              : 'navbar-searchbar-button invisible'
+          }
+          onClick={() => {
+            setSearchParams({ query: '' });
+            searchbarRef.current?.focus();
+          }}
+          title='Clear search'
+          type='reset'
+        >
+          <svg
+            focusable='false'
+            viewBox='0 0 24 24'
+            className='navbar-searchbar-svg'
           >
-            <svg
-              focusable='false'
-              viewBox='0 0 24 24'
-              className='navbar-searchbar-svg'
-            >
-              <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'></path>
-            </svg>
-          </button>
-        )}
+            <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'></path>
+          </svg>
+        </button>
       </div>
       <div className='navbar-right'>
         <SyncStatusButton
