@@ -2,19 +2,14 @@ import { Fragment, useEffect, useState } from 'react';
 import { Note } from './types';
 import NoteModal from './NoteModal';
 import { v4 as uuidv4 } from 'uuid';
-import { API_BASE_URL, BLANK_NOTE } from './constants';
-import AutoResizingTextarea from './AutoResizingTextarea';
+import { API_BASE_URL } from './constants';
 import Navbar from './Navbar';
-import NoNotesEmptyState from './NoNotesEmptyState';
-import NoteToolbar from './NoteToolbar';
-import NoteViewCard from './NoteViewCard';
 import Toast from './Toast';
 import Sidebar from './Sidebar';
 import { Outlet } from 'react-router-dom';
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
-  const [newNote, setNewNote] = useState<Note>(BLANK_NOTE);
   const [isFetchingNotes, setIsFetchingNotes] = useState(false);
 
   // Create note
@@ -54,45 +49,21 @@ function App() {
     }
   };
 
-  const archiveNote = async (noteId: string) => {
-    setNotes((prevNotes) =>
-      prevNotes.map((note) =>
-        note.id === noteId ? { ...note, isArchived: true } : note
-      )
-    );
-
-    try {
-      await fetch(`${API_BASE_URL}/notes/${noteId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          isArchived: true
-        })
-      });
-      fetchNotes(); // Refetch to ensure consistency
-    } catch (error) {
-      console.error('Failed to archive note:', error);
-    }
-  };
-
-  const saveNoteEdits = async (noteDraft: Note) => {
+  const updateNote = async (noteId: string, noteUpdates: Partial<Note>) => {
     // Local optimistic update
     setNotes((prevNotes) =>
       prevNotes.map((note) =>
-        note.id === noteDraft.id ? { ...note, ...noteDraft } : note
+        note.id === noteId ? { ...note, ...noteUpdates } : note
       )
     );
 
-    await fetch(`${API_BASE_URL}/notes/${noteDraft.id}`, {
+    await fetch(`${API_BASE_URL}/notes/${noteId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        title: noteDraft.title,
-        content: noteDraft.content
+        ...noteUpdates
       })
     });
     fetchNotes(); // Refetch to ensure consistency
@@ -138,12 +109,11 @@ function App() {
         </div>
       </main>
       <NoteModal
-        archiveNote={archiveNote}
         closeModal={closeModal}
         deleteNote={deleteNote}
         isOpen={isModalOpen}
         originalNote={noteOpen}
-        saveNoteEdits={saveNoteEdits}
+        updateNote={updateNote}
       />
       <Toast />
     </Fragment>

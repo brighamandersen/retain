@@ -17,8 +17,8 @@ model Note {
   id              String   @id @default(uuid())
   title           String?
   content         String?
-  createTimestamp Int
-  updateTimestamp Int
   isArchived      Boolean  @default(false)
   isTrashed       Boolean  @default(false)
+  createTimestamp Int
+  updateTimestamp Int
 }

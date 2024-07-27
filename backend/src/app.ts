@@ -70,7 +70,7 @@ app.get('/notes/:id', async (req, res) => {
 
 app.put('/notes/:id', async (req, res) => {
   const { id } = req.params;
-  const { title, content } = req.body;
+  const { title, content, isArchived, isTrashed } = req.body;
 
   try {
     const note = await prisma.note.update({
@@ -80,6 +80,8 @@ app.put('/notes/:id', async (req, res) => {
       data: {
         title,
         content,
+        isArchived,
+        isTrashed,
         updateTimestamp: dayjs().unix()
       }
     });
