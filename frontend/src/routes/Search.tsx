@@ -15,13 +15,25 @@ function Search() {
       (note?.content ?? '').toLowerCase().includes(query.toLowerCase())
   );
 
+  const matchingUnarchivedNotes = notes.filter((note) => !note.isArchived);
+  const matchingArchivedNotes = notes.filter((note) => note.isArchived);
+
   if (query && matchingNotes.length === 0) {
     return <div className='no-matching-results-text'>No matching results.</div>;
   }
 
   return (
     <div>
-      {matchingNotes.map((note) => (
+      {matchingUnarchivedNotes.map((note) => (
+        <NoteViewCard
+          key={note.id}
+          note={note}
+          isOpen={false}
+          onClick={() => openModal(note.id)}
+        />
+      ))}
+      <div className='note-list-header'>Archive</div>
+      {matchingArchivedNotes.map((note) => (
         <NoteViewCard
           key={note.id}
           note={note}

@@ -297,10 +297,9 @@ textarea:focus {
 .sidebar {
   width: 200px;
   position: fixed;
-  top: 69px; /* Assuming the navbar height is 60px */
+  top: 69px;
   left: 0;
   bottom: 0;
-  /* background-color: #f0f0f0; */
   overflow-y: auto;
   padding-top: 20px;
   display: flex;
@@ -319,6 +318,12 @@ textarea:focus {
   padding: 24px;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
+  border: 1px solid transparent;
+}
+
+.sidebar-link:focus {
+  outline: none;
+  border-color: rgb(95, 99, 104);
 }
 
 .sidebar-link:hover {
@@ -432,4 +437,17 @@ textarea:focus {
   font-size: 22px;
   font-weight: 400;
   line-height: 28px;
+}
+
+.note-list-header {
+  color: rgb(95, 99, 104);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  line-height: 16px;
+  margin-bottom: -8px;
+  margin-left: 32px;
+  margin-right: 32px;
+  margin-top: 32px;
+  text-transform: uppercase;
 }
