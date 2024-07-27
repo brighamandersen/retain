@@ -10,7 +10,8 @@ function NoteCreateCard() {
 
   const [newNote, setNewNote] = useState<Note>(BLANK_NOTE);
 
-  const createNoteFormRef = React.useRef<HTMLFormElement>(null);
+  const formRef = React.useRef<HTMLFormElement>(null);
+  const firstInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleSubmit = () => {
     createNote({
@@ -23,8 +24,8 @@ function NoteCreateCard() {
 
   const handleBlur = (event: React.FocusEvent<HTMLFormElement>) => {
     if (
-      createNoteFormRef.current &&
-      !createNoteFormRef.current.contains(event.relatedTarget as Node)
+      formRef.current &&
+      !formRef.current.contains(event.relatedTarget as Node)
     ) {
       if (newNote.title || newNote.content) {
         handleSubmit();
@@ -35,14 +36,16 @@ function NoteCreateCard() {
   return (
     <form
       className='note-create-card-container'
-      ref={createNoteFormRef}
+      ref={formRef}
       onBlur={handleBlur}
       onSubmit={(e) => {
         e.preventDefault();
         handleSubmit();
+        firstInputRef.current?.focus(); // Bring focus back to top of form
       }}
     >
       <input
+        ref={firstInputRef}
         type='text'
         className='note-create-card-title'
         value={newNote.title}
