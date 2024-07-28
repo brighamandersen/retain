@@ -1,9 +1,9 @@
 import { useOutletContext, useSearchParams } from 'react-router-dom';
-import { Note } from '../types';
+import { OutletContext } from '../types';
 import NoteViewCard from '../NoteViewCard';
 
 function Search() {
-  const { notes, openModal } = useOutletContext<{ notes: Note[] }>();
+  const { notes, openModal } = useOutletContext<OutletContext>();
 
   const [searchParams] = useSearchParams();
   const query = searchParams.get('query') || '';

@@ -6,3 +6,9 @@ export interface Note {
   updateTimestamp?: number; // Can be undefined for unsaved notes
   isArchived: boolean;
 }
+
+export interface OutletContext {
+  createNote(noteToCreate: Note): void;
+  notes: Note[];
+  openModal(noteId?: string): void;
+}

@@ -1,10 +1,10 @@
 import { useOutletContext } from 'react-router-dom';
 import NoteViewCard from '../NoteViewCard';
-import { Note } from '../types';
+import { OutletContext } from '../types';
 import NoteCreateCard from '../NoteCreateCard';
 
 function Home() {
-  const { notes, openModal } = useOutletContext<{ notes: Note[] }>();
+  const { notes, openModal } = useOutletContext<OutletContext>();
 
   const unarchivedNotes = notes.filter((note) => !note.isArchived);
 

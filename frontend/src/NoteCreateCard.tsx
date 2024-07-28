@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Note } from './types';
+import { Note, OutletContext } from './types';
 import { BLANK_NOTE } from './constants';
 import AutoResizingTextarea from './AutoResizingTextarea';
 import NoteToolbar from './NoteToolbar';
 import { useOutletContext } from 'react-router-dom';
 
 function NoteCreateCard() {
-  const { createNote } = useOutletContext();
+  const { createNote } = useOutletContext<OutletContext>();
 
   const [newNote, setNewNote] = useState<Note>(BLANK_NOTE);
 

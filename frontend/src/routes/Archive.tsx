@@ -1,9 +1,9 @@
 import { useOutletContext } from 'react-router-dom';
-import { Note } from '../types';
+import { OutletContext } from '../types';
 import NoteViewCard from '../NoteViewCard';
 
 function Archive() {
-  const { notes, openModal } = useOutletContext<{ notes: Note[] }>();
+  const { notes, openModal } = useOutletContext<OutletContext>();
 
   const archivedNotes = notes.filter((note) => note.isArchived);
 
