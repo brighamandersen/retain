@@ -18,6 +18,7 @@ model Note {
   title           String?
   content         String?
   isArchived      Boolean  @default(false)
+  isPinned        Boolean  @default(false)
   isTrashed       Boolean  @default(false)
   createTimestamp Int
   updateTimestamp Int

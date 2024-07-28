@@ -3,12 +3,6 @@ curl http://localhost:3000/notes
 
 ###
 
-# Search for notes
-
-curl http://localhost:3000/notes?search=Content
-
-###
-
 # Get a note by id
 
 curl http://localhost:3000/notes/1
@@ -30,7 +24,11 @@ curl --request POST http://localhost:3000/notes \
 curl --request PUT http://localhost:3000/notes/1 \
 -H "Content-Type: application/json" \
 -d '{
-  "title": "Edited title"
+  "title": "Edited title",
+  "content": "Edited content",
+  "isArchived": true,
+  "isPinned": true,
+  "isTrashed": true
 }'
 
 ###

@@ -70,10 +70,18 @@ app.get('/notes/:id', async (req, res) => {
 
 app.put('/notes/:id', async (req, res) => {
   const { id } = req.params;
-  const { title, content, isArchived, isTrashed } = req.body;
+  const { title, content, isArchived, isPinned, isTrashed } = req.body;
 
   try {
-    const note = await prisma.note.update({
+    const existingNote = await prisma.note.findUnique({
+      where: { id }
+    });
+
+    if (!existingNote) {
+      return res.status(404).send('Note not found');
+    }
+
+    const updatedNote = await prisma.note.update({
       where: {
         id
       },
@@ -81,12 +89,13 @@ app.put('/notes/:id', async (req, res) => {
         title,
         content,
         isArchived,
+        isPinned,
         isTrashed,
         updateTimestamp: dayjs().unix()
       }
     });
 
-    res.send(note);
+    res.send(updatedNote);
   } catch (error) {
     console.error('Error updating note:', error);
     res.status(500).send('Internal Server Error');
