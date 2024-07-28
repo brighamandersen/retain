@@ -1,4 +1,3 @@
-import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Note } from '../types';
 import NoteViewCard from '../NoteViewCard';
@@ -24,7 +23,6 @@ function Archive() {
         <NoteViewCard
           key={note.id}
           note={note}
-          isOpen={false}
           onClick={() => openModal(note.id)}
         />
       ))}

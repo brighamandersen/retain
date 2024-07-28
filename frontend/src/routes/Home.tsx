@@ -1,4 +1,3 @@
-import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 import NoteViewCard from '../NoteViewCard';
 import { Note } from '../types';
@@ -26,7 +25,6 @@ function Home() {
         <NoteViewCard
           key={note.id}
           note={note}
-          isOpen={false}
           onClick={() => openModal(note.id)}
         />
       ))}

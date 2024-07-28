@@ -65,24 +65,9 @@ function NoteModal(props: NoteModalProps) {
           }}
           placeholder='Note'
         />
-        <div
-          style={{
-            padding: 5,
-            paddingLeft: 10,
-            paddingRight: 10,
-            display: 'flex',
-            justifyContent: 'flex-end'
-          }}
-        >
+        <div className='note-modal-edit-note-timestamp-tag-container'>
           {noteDraft?.updateTimestamp && (
-            <div
-              style={{
-                fontSize: 12,
-                color: 'rgba(0, 0, 0, 0.8)',
-                marginTop: 6,
-                marginRight: 6
-              }}
-            >
+            <div className='note-modal-edit-note-timestamp-tag'>
               {`Edited ${dayjs
                 .unix(noteDraft?.updateTimestamp)
                 .format('MMM D h:mm A')}`}

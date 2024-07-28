@@ -1,4 +1,3 @@
-import React from 'react';
 import { useOutletContext, useSearchParams } from 'react-router-dom';
 import { Note } from '../types';
 import NoteViewCard from '../NoteViewCard';
@@ -28,7 +27,6 @@ function Search() {
         <NoteViewCard
           key={note.id}
           note={note}
-          isOpen={false}
           onClick={() => openModal(note.id)}
         />
       ))}
@@ -37,7 +35,6 @@ function Search() {
         <NoteViewCard
           key={note.id}
           note={note}
-          isOpen={false}
           onClick={() => openModal(note.id)}
         />
       ))}
