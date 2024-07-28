@@ -17,7 +17,8 @@ function NoteCreateCard() {
     createNote({
       title: newNote.title,
       content: newNote.content,
-      isArchived: false
+      isArchived: false,
+      isPinned: false
     });
     setNewNote(BLANK_NOTE);
   };

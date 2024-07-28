@@ -7,6 +7,8 @@ function Home() {
   const { notes, openModal } = useOutletContext<OutletContext>();
 
   const unarchivedNotes = notes.filter((note) => !note.isArchived);
+  const pinnedNotes = unarchivedNotes.filter((note) => note.isPinned);
+  const unpinnedNotes = unarchivedNotes.filter((note) => !note.isPinned);
 
   return (
     <div>
@@ -21,7 +23,18 @@ function Home() {
           </div>
         </div>
       )}
-      {unarchivedNotes.map((note) => (
+      {pinnedNotes.length > 0 && <div className='note-list-header'>Pinned</div>}
+      {pinnedNotes.map((note) => (
+        <NoteViewCard
+          key={note.id}
+          note={note}
+          onClick={() => openModal(note.id)}
+        />
+      ))}
+      {unpinnedNotes.length > 0 && (
+        <div className='note-list-header'>Others</div>
+      )}
+      {unpinnedNotes.map((note) => (
         <NoteViewCard
           key={note.id}
           note={note}

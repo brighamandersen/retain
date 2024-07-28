@@ -1,66 +1,56 @@
 interface NoteToolbarProps {
-  isArchived?: boolean;
-  onArchiveClick?(): void;
-  onCloseClick?(): void;
+  isArchived: boolean;
+  isPinned: boolean;
+  onArchiveUnarchiveClick?(): void;
   onDeleteClick?(): void;
-  onUnarchiveClick?(): void;
+  onPinUnpinClick?(): void;
 }
 
 function NoteToolbar(props: NoteToolbarProps) {
   const {
     isArchived,
-    onArchiveClick,
-    onCloseClick,
+    isPinned,
+    onArchiveUnarchiveClick,
     onDeleteClick,
-    onUnarchiveClick
+    onPinUnpinClick
   } = props;
 
   return (
     <div className='note-toolbar'>
       <button
         className='note-toolbar-button'
-        title='Save'
-        type='submit'
-        // onClick not needed, handled by form submit
+        onClick={onArchiveUnarchiveClick}
+        title={isArchived ? 'Unarchive' : 'Archive'}
+        type='button'
       >
-        Save
+        {isArchived ? 'Unarchive' : 'Archive'}
       </button>
-      {!isArchived && onArchiveClick && (
-        <button
-          className='note-toolbar-button'
-          onClick={onArchiveClick}
-          title='Archive'
-        >
-          Archive
-        </button>
-      )}
-      {isArchived && onUnarchiveClick && (
-        <button
-          className='note-toolbar-button'
-          onClick={onUnarchiveClick}
-          title='Unarchive'
-        >
-          Unarchive
-        </button>
-      )}
+      <button
+        className='note-toolbar-button'
+        onClick={onPinUnpinClick}
+        title={isPinned ? 'Unpin' : 'Pin'}
+        type='button'
+      >
+        {isPinned ? 'Unpin' : 'Pin'}
+      </button>
       {onDeleteClick && (
         <button
           className='note-toolbar-button'
           onClick={onDeleteClick}
           title='Delete'
+          type='button'
         >
           Delete
         </button>
       )}
-      {onCloseClick && (
-        <button
-          className='note-toolbar-button'
-          onClick={onCloseClick}
-          title='Close'
-        >
-          Close
-        </button>
-      )}
+      <button
+        className='note-toolbar-button'
+        // onClick not needed, handled by form submit
+        title='Close'
+        type='submit'
+      >
+        Close
+      </button>
     </div>
   );
 }

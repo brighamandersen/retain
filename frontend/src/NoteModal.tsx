@@ -21,11 +21,12 @@ function NoteModal(props: NoteModalProps) {
     setNoteDraft(originalNote);
   }, [originalNote]);
 
-  if (!isOpen || !originalNote) return null;
+  if (!isOpen || !originalNote || !noteDraft) return null;
 
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     // Only close the modal if the overlay is clicked, not the modal itself
     if (e.target === e.currentTarget) {
+      updateNote(originalNote.id!, noteDraft);
       closeModal();
     }
   };
@@ -75,19 +76,23 @@ function NoteModal(props: NoteModalProps) {
           )}
         </div>
         <NoteToolbar
-          isArchived={originalNote.isArchived}
-          onArchiveClick={() => {
-            updateNote(originalNote.id!, { isArchived: true });
+          isArchived={noteDraft.isArchived}
+          isPinned={noteDraft.isPinned}
+          onArchiveUnarchiveClick={() => {
+            updateNote(originalNote.id!, {
+              isArchived: !originalNote.isArchived
+            });
             closeModal();
           }}
-          onCloseClick={closeModal}
           onDeleteClick={() => {
             deleteNote(originalNote.id!);
             closeModal();
           }}
-          onUnarchiveClick={() => {
-            updateNote(originalNote.id!, { isArchived: false });
-            closeModal();
+          onPinUnpinClick={() => {
+            setNoteDraft((prevNoteDraft: Note) => ({
+              ...prevNoteDraft,
+              isPinned: !prevNoteDraft.isPinned
+            }));
           }}
         />
       </form>

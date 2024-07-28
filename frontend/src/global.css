@@ -24,13 +24,16 @@ button {
   outline: none;
 }
 
+button:focus {
+  border-color: rgb(203, 203, 203);
+}
+
 input,
 textarea {
   border: 1px solid transparent; /* So that it doesn't grow when focused */
   outline: none;
 }
 
-button:focus,
 input:focus,
 textarea:focus {
   border-radius: 0px;
@@ -465,4 +468,19 @@ textarea:focus {
   margin-right: 32px;
   margin-top: 32px;
   text-transform: uppercase;
+}
+
+.pin-note-button {
+  background-color: transparent;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  width: 32px;
+}
+
+.pin-note-svg {
+  width: 24px;
+  height: 24px;
 }
