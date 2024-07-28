@@ -2,7 +2,7 @@
 
 ### Description of project
 
-FIXME
+A clone of the popular online notetaking app, Google Keep
 
 ### Motivation for project
 
