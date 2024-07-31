@@ -405,18 +405,20 @@ textarea:focus {
 
 .toast-close-svg {
   fill: white;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
+  width: inherit;
+  height: inherit;
 }
 
-.toast-close-svg:hover {
+.toast-close-button:hover {
   opacity: 0.87;
   background-color: rgba(95, 99, 104, 0.157);
 }
 
 .toast-close-button {
   background-color: transparent;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
