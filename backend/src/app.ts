@@ -14,7 +14,11 @@ app.get('/', (_req, res) => {
 });
 
 app.post('/notes', async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content, isArchived, isPinned } = req.body;
+
+  if (!title || !content) {
+    return res.status(400).send('Title and content are required');
+  }
 
   try {
     const note = await prisma.note.create({
@@ -22,7 +26,9 @@ app.post('/notes', async (req, res) => {
         title,
         content,
         createTimestamp: dayjs().unix(),
-        updateTimestamp: dayjs().unix()
+        updateTimestamp: dayjs().unix(),
+        ...(isArchived && { isArchived }),
+        ...(isPinned && { isPinned })
       }
     });
 
