@@ -9,11 +9,19 @@ interface NoteModalProps {
   deleteNote(noteId: string): void;
   isOpen: boolean;
   originalNote: Note;
+  setToastMessage: (message: string | null) => void;
   updateNote: (noteId: string, noteUpdates: Partial<Note>) => void;
 }
 
 function NoteModal(props: NoteModalProps) {
-  const { closeModal, deleteNote, isOpen, originalNote, updateNote } = props;
+  const {
+    closeModal,
+    deleteNote,
+    isOpen,
+    originalNote,
+    setToastMessage,
+    updateNote
+  } = props;
 
   const [noteDraft, setNoteDraft] = useState<Note>(originalNote);
 
@@ -87,6 +95,7 @@ function NoteModal(props: NoteModalProps) {
           onDeleteClick={() => {
             deleteNote(originalNote.id!);
             closeModal();
+            setToastMessage('Note trashed');
           }}
           onPinUnpinClick={() => {
             setNoteDraft((prevNoteDraft: Note) => ({

@@ -8,3 +8,5 @@ export const BLANK_NOTE: Note = {
   isArchived: false,
   isPinned: false
 };
+
+export const FIVE_SECONDS_IN_MS = 5000;

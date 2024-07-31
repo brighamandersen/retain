@@ -117,6 +117,7 @@ function App() {
         deleteNote={deleteNote}
         isOpen={isModalOpen}
         originalNote={noteOpen}
+        setToastMessage={setToastMessage}
         updateNote={updateNote}
       />
       <Toast toastMessage={toastMessage} setToastMessage={setToastMessage} />

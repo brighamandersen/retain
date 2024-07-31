@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { FIVE_SECONDS_IN_MS } from './constants';
+
 interface ToastProps {
   toastMessage: string | null;
   setToastMessage: (toastMessage: string | null) => void;
@@ -6,19 +9,23 @@ interface ToastProps {
 function Toast(props: ToastProps) {
   const { toastMessage, setToastMessage } = props;
 
-  const handleClose = () => {
-    setToastMessage(null);
-  };
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => {
+        setToastMessage(null);
+      }, FIVE_SECONDS_IN_MS);
 
-  if (!toastMessage) return null;
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage, setToastMessage]);
 
   return (
-    <div className='toast-container'>
+    <div className={`toast-container ${!toastMessage ? 'invisible' : ''}`}>
       <div className='toast-text'>{toastMessage}</div>
       <button
         aria-label='Close'
         className='toast-close-button'
-        onClick={handleClose}
+        onClick={() => setToastMessage(null)}
         title='Close'
       >
         <svg viewBox='0 0 18 18' className='toast-close-svg'>

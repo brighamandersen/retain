@@ -46,10 +46,6 @@ textarea:focus {
   max-width: 600px;
 }
 
-.invisible {
-  visibility: hidden;
-}
-
 /* AutoResizingTextarea */
 
 .auto-resizing-textarea {
@@ -109,7 +105,6 @@ textarea:focus {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  overflow: hidden;
 }
 
 .navbar-searchbar-form {
@@ -166,7 +161,6 @@ textarea:focus {
   border-radius: 8px;
   border: 1px solid rgb(224, 224, 224);
   box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px 0px;
-  overflow: hidden;
 }
 
 .note-create-card-title {
@@ -210,7 +204,6 @@ textarea:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.218s ease-in;
 }
 
 .note-modal-card {
@@ -218,7 +211,6 @@ textarea:focus {
   border-radius: 8px;
   max-width: 550px;
   width: 100%;
-  overflow: hidden;
 }
 
 .note-modal-edit-note-title {
@@ -395,6 +387,8 @@ textarea:focus {
   width: 400px;
   display: flex;
   align-items: center;
+  opacity: 1;
+  transition: opacity 0.5s;
 }
 
 .toast-text {
@@ -425,6 +419,10 @@ textarea:focus {
 }
 
 /* Misc */
+
+.invisible {
+  opacity: 0;
+}
 
 .no-matching-results-text {
   color: rgb(32, 33, 36);
