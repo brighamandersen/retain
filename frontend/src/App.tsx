@@ -11,6 +11,7 @@ import { Outlet } from 'react-router-dom';
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [isFetchingNotes, setIsFetchingNotes] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Create note
   const createNote = async (noteToCreate: Note) => {
@@ -105,7 +106,8 @@ function App() {
             context={{
               createNote,
               notes,
-              openModal
+              openModal,
+              setToastMessage
             }}
           />
         </div>
@@ -117,7 +119,7 @@ function App() {
         originalNote={noteOpen}
         updateNote={updateNote}
       />
-      <Toast />
+      <Toast toastMessage={toastMessage} setToastMessage={setToastMessage} />
     </Fragment>
   );
 }

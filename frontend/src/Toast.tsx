@@ -1,17 +1,20 @@
-import { useState } from 'react';
+interface ToastProps {
+  toastMessage: string | null;
+  setToastMessage: (toastMessage: string | null) => void;
+}
 
-function Toast() {
-  const [isVisible, setIsVisible] = useState(false);
+function Toast(props: ToastProps) {
+  const { toastMessage, setToastMessage } = props;
 
   const handleClose = () => {
-    setIsVisible(false);
+    setToastMessage(null);
   };
 
-  if (!isVisible) return null;
+  if (!toastMessage) return null;
 
   return (
     <div className='toast-container'>
-      <div className='toast-text'>Toast</div>
+      <div className='toast-text'>{toastMessage}</div>
       <button
         aria-label='Close'
         className='toast-close-button'

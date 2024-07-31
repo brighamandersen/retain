@@ -12,4 +12,5 @@ export interface OutletContext {
   createNote(noteToCreate: Note): void;
   notes: Note[];
   openModal(noteId?: string): void;
+  setToastMessage(message: string | null): void;
 }

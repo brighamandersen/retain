@@ -31,7 +31,6 @@ app.post('/notes', async (req, res) => {
         ...(isPinned && { isPinned })
       }
     });
-    console.log({ note });
 
     res.send(note);
   } catch (error) {

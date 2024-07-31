@@ -6,7 +6,7 @@ import NoteToolbar from './NoteToolbar';
 import { useOutletContext } from 'react-router-dom';
 
 function NoteCreateCard() {
-  const { createNote } = useOutletContext<OutletContext>();
+  const { createNote, setToastMessage } = useOutletContext<OutletContext>();
 
   const [newNote, setNewNote] = useState<Note>(BLANK_NOTE);
 
@@ -15,6 +15,7 @@ function NoteCreateCard() {
 
   const handleSubmit = (noteToCreate: Note) => {
     createNote(noteToCreate);
+    setToastMessage('Note created');
     setNewNote(BLANK_NOTE);
   };
 
