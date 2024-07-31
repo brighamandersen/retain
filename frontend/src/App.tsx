@@ -25,7 +25,9 @@ function App() {
         },
         body: JSON.stringify({
           title: noteToCreate.title,
-          content: noteToCreate.content
+          content: noteToCreate.content,
+          isArchived: noteToCreate.isArchived,
+          isPinned: noteToCreate.isPinned
         })
       });
       fetchNotes(); // Refetch to ensure consistency

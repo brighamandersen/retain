@@ -13,13 +13,8 @@ function NoteCreateCard() {
   const formRef = React.useRef<HTMLFormElement>(null);
   const firstInputRef = React.useRef<HTMLInputElement>(null);
 
-  const handleSubmit = () => {
-    createNote({
-      title: newNote.title,
-      content: newNote.content,
-      isArchived: false,
-      isPinned: false
-    });
+  const handleSubmit = (noteToCreate: Note) => {
+    createNote(noteToCreate);
     setNewNote(BLANK_NOTE);
   };
 
@@ -29,7 +24,7 @@ function NoteCreateCard() {
       !formRef.current.contains(event.relatedTarget as Node)
     ) {
       if (newNote.title || newNote.content) {
-        handleSubmit();
+        handleSubmit(newNote);
       }
     }
   };
@@ -41,7 +36,7 @@ function NoteCreateCard() {
       onBlur={handleBlur}
       onSubmit={(e) => {
         e.preventDefault();
-        handleSubmit();
+        handleSubmit(newNote);
         firstInputRef.current?.focus(); // Bring focus back to top of form
       }}
     >
@@ -69,7 +64,22 @@ function NoteCreateCard() {
         }
         placeholder='Take a note...'
       />
-      <NoteToolbar />
+      <NoteToolbar
+        isArchived={newNote.isArchived}
+        isPinned={newNote.isPinned}
+        onArchiveUnarchiveClick={() =>
+          handleSubmit({
+            ...newNote,
+            isArchived: !newNote.isArchived
+          })
+        }
+        onPinUnpinClick={() =>
+          setNewNote((prevNewNote) => ({
+            ...prevNewNote,
+            isPinned: !prevNewNote.isPinned
+          }))
+        }
+      />
     </form>
   );
 }
