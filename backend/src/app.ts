@@ -27,8 +27,8 @@ app.post('/notes', async (req, res) => {
         content,
         createTimestamp: dayjs().unix(),
         updateTimestamp: dayjs().unix(),
-        ...(isArchived && { isArchived }),
-        ...(isPinned && { isPinned })
+        isArchived: isArchived || false,
+        isPinned: isPinned || false
       }
     });
 
