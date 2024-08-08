@@ -31,11 +31,15 @@ function NoteModal(props: NoteModalProps) {
 
   if (!isOpen || !originalNote || !noteDraft) return null;
 
+  const handleSaveChanges = () => {
+    updateNote(originalNote.id!, noteDraft);
+    closeModal();
+  };
+
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     // Only close the modal if the overlay is clicked, not the modal itself
     if (e.target === e.currentTarget) {
-      updateNote(originalNote.id!, noteDraft);
-      closeModal();
+      handleSaveChanges();
     }
   };
 
@@ -45,8 +49,7 @@ function NoteModal(props: NoteModalProps) {
         className='note-modal-card'
         onSubmit={(e) => {
           e.preventDefault();
-          updateNote(originalNote.id!, noteDraft);
-          closeModal();
+          handleSaveChanges();
         }}
       >
         <input
@@ -87,10 +90,15 @@ function NoteModal(props: NoteModalProps) {
           isArchived={noteDraft.isArchived}
           isPinned={noteDraft.isPinned}
           onArchiveUnarchiveClick={() => {
+            const isArchivedNow = !noteDraft.isArchived;
             updateNote(originalNote.id!, {
-              isArchived: !originalNote.isArchived
+              ...noteDraft,
+              isArchived: isArchivedNow
             });
             closeModal();
+            setToastMessage(
+              isArchivedNow ? 'Note archived' : 'Note unarchived'
+            );
           }}
           onDeleteClick={() => {
             deleteNote(originalNote.id!);
@@ -98,10 +106,13 @@ function NoteModal(props: NoteModalProps) {
             setToastMessage('Note trashed');
           }}
           onPinUnpinClick={() => {
-            setNoteDraft((prevNoteDraft: Note) => ({
-              ...prevNoteDraft,
-              isPinned: !prevNoteDraft.isPinned
-            }));
+            const isPinnedNow = !noteDraft.isPinned;
+            updateNote(originalNote.id!, {
+              ...noteDraft,
+              isPinned: isPinnedNow
+            });
+            closeModal();
+            setToastMessage(isPinnedNow ? 'Note pinned' : 'Note unpinned');
           }}
         />
       </form>

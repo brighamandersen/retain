@@ -13,8 +13,10 @@ function NoteCreateCard() {
   const formRef = React.useRef<HTMLFormElement>(null);
   const firstInputRef = React.useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (noteToCreate: Note) => {
-    createNote(noteToCreate);
+  const haveChangesBeenMade = newNote !== BLANK_NOTE;
+
+  const handleSaveNewNote = () => {
+    createNote(newNote);
     setToastMessage('Note created');
     setNewNote(BLANK_NOTE);
   };
@@ -24,8 +26,8 @@ function NoteCreateCard() {
       formRef.current &&
       !formRef.current.contains(event.relatedTarget as Node)
     ) {
-      if (newNote.title || newNote.content) {
-        handleSubmit(newNote);
+      if (haveChangesBeenMade) {
+        handleSaveNewNote();
       }
     }
   };
@@ -37,7 +39,7 @@ function NoteCreateCard() {
       onBlur={handleBlur}
       onSubmit={(e) => {
         e.preventDefault();
-        handleSubmit(newNote);
+        handleSaveNewNote();
         firstInputRef.current?.focus(); // Bring focus back to top of form
       }}
     >
@@ -65,22 +67,24 @@ function NoteCreateCard() {
         }
         placeholder='Take a note...'
       />
-      <NoteToolbar
-        isArchived={newNote.isArchived}
-        isPinned={newNote.isPinned}
-        onArchiveUnarchiveClick={() =>
-          handleSubmit({
-            ...newNote,
-            isArchived: !newNote.isArchived
-          })
-        }
-        onPinUnpinClick={() =>
-          setNewNote((prevNewNote) => ({
-            ...prevNewNote,
-            isPinned: !prevNewNote.isPinned
-          }))
-        }
-      />
+      {haveChangesBeenMade && (
+        <NoteToolbar
+          isArchived={newNote.isArchived}
+          isPinned={newNote.isPinned}
+          onArchiveUnarchiveClick={() => {
+            const isArchivedNow = !newNote.isArchived;
+            createNote({ ...newNote, isArchived: isArchivedNow });
+            setToastMessage(isArchivedNow ? 'Note archived' : 'Note created');
+            setNewNote(BLANK_NOTE);
+          }}
+          onPinUnpinClick={() => {
+            const isPinnedNow = !newNote.isPinned;
+            createNote({ ...newNote, isPinned: isPinnedNow });
+            setToastMessage(isPinnedNow ? 'Note pinned' : 'Note unpinned');
+            setNewNote(BLANK_NOTE);
+          }}
+        />
+      )}
     </form>
   );
 }
