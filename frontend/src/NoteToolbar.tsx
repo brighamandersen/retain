@@ -46,10 +46,10 @@ function NoteToolbar(props: NoteToolbarProps) {
       <button
         className='note-toolbar-button'
         // onClick not needed, handled by form submit
-        title='Save & Close'
+        title='Save'
         type='submit'
       >
-        Save & Close
+        Save
       </button>
     </div>
   );
