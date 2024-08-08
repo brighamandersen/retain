@@ -95,24 +95,25 @@ function NoteModal(props: NoteModalProps) {
               ...noteDraft,
               isArchived: isArchivedNow
             });
-            closeModal();
             setToastMessage(
               isArchivedNow ? 'Note archived' : 'Note unarchived'
             );
+            closeModal();
           }}
           onDeleteClick={() => {
             deleteNote(originalNote.id!);
-            closeModal();
             setToastMessage('Note trashed');
+            closeModal();
           }}
           onPinUnpinClick={() => {
             const isPinnedNow = !noteDraft.isPinned;
             updateNote(originalNote.id!, {
               ...noteDraft,
-              isPinned: isPinnedNow
+              isPinned: isPinnedNow,
+              ...(isPinnedNow && { isArchived: false })
             });
-            closeModal();
             setToastMessage(isPinnedNow ? 'Note pinned' : 'Note unpinned');
+            closeModal();
           }}
         />
       </form>

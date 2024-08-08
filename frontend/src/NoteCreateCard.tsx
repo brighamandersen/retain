@@ -79,7 +79,11 @@ function NoteCreateCard() {
           }}
           onPinUnpinClick={() => {
             const isPinnedNow = !newNote.isPinned;
-            createNote({ ...newNote, isPinned: isPinnedNow });
+            createNote({
+              ...newNote,
+              isPinned: isPinnedNow,
+              ...(isPinnedNow && { isArchived: false })
+            });
             setToastMessage(isPinnedNow ? 'Note pinned' : 'Note unpinned');
             setNewNote(BLANK_NOTE);
           }}
