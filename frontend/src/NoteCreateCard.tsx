@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { Note, OutletContext } from './types';
 import { BLANK_NOTE } from './constants';
 import AutoResizingTextarea from './AutoResizingTextarea';
 import NoteToolbar from './NoteToolbar';
-import { useOutletContext } from 'react-router-dom';
 
 function NoteCreateCard() {
   const { createNote, setToastMessage } = useOutletContext<OutletContext>();
@@ -13,7 +13,7 @@ function NoteCreateCard() {
   const formRef = React.useRef<HTMLFormElement>(null);
   const firstInputRef = React.useRef<HTMLInputElement>(null);
 
-  const haveChangesBeenMade = newNote !== BLANK_NOTE;
+  const canBeSaved = newNote.title || newNote.content;
 
   const handleSaveNewNote = () => {
     createNote(newNote);
@@ -22,14 +22,13 @@ function NoteCreateCard() {
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLFormElement>) => {
-    if (
-      formRef.current &&
-      !formRef.current.contains(event.relatedTarget as Node)
-    ) {
-      if (haveChangesBeenMade) {
-        handleSaveNewNote();
-      }
+    const isFocusStillWithinForm =
+      !formRef.current || formRef.current.contains(event.relatedTarget as Node);
+    if (isFocusStillWithinForm || !canBeSaved) {
+      return;
     }
+
+    handleSaveNewNote();
   };
 
   return (
@@ -67,7 +66,7 @@ function NoteCreateCard() {
         }
         placeholder='Take a note...'
       />
-      {haveChangesBeenMade && (
+      {canBeSaved && (
         <NoteToolbar
           isArchived={newNote.isArchived}
           isPinned={newNote.isPinned}
