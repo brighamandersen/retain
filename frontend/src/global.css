@@ -332,7 +332,7 @@ textarea:focus {
   border: 1px solid transparent;
 }
 
-.sidebar-link:focus {
+.sidebar-link:focus-visible {
   outline: none;
   border-color: rgb(95, 99, 104);
 }
