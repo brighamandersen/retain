@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Note, OutletContext } from './types';
 import { BLANK_NOTE } from './constants';
@@ -14,6 +14,12 @@ function NoteCreateCard() {
   const firstInputRef = React.useRef<HTMLInputElement>(null);
 
   const canBeSaved = newNote.title || newNote.content;
+
+  useEffect(() => {
+    if (firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
+  }, []);
 
   const handleSaveNewNote = () => {
     createNote(newNote);

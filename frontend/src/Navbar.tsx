@@ -1,6 +1,6 @@
 import retainIconPng from './assets/retain-icon.png';
-import { useRef, useState } from 'react';
-import { useHistory, useNavigate, useSearchParams } from 'react-router-dom';
+import { useRef } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import React from 'react';
 import SyncStatusButton from './SyncStatusButton';
 

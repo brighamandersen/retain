@@ -2,6 +2,7 @@
   font-family: 'Roboto', 'Times New Roman', Helvetica, Arial, sans-serif;
   margin: 0px;
   padding: 0px;
+  --navbar-height: 70px;
 }
 
 *,
@@ -44,6 +45,9 @@ textarea:focus {
   margin: 0 auto;
   width: 100%;
   max-width: 600px;
+  padding-top: var(
+    --navbar-height
+  ); /* To prevent the content from going under the navbar */
 }
 
 /* AutoResizingTextarea */
@@ -81,6 +85,12 @@ textarea:focus {
   justify-content: space-between;
   border-bottom: 1px solid #e0e0e0;
   padding: 8px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-left {
@@ -305,7 +315,7 @@ textarea:focus {
 .sidebar {
   width: 200px;
   position: fixed;
-  top: 69px;
+  top: var(--navbar-height);
   left: 0;
   bottom: 0;
   overflow-y: auto;
