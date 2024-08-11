@@ -14,8 +14,13 @@ function Search() {
       (note?.content ?? '').toLowerCase().includes(query.toLowerCase())
   );
 
-  const matchingUnarchivedNotes = notes.filter((note) => !note.isArchived);
-  const matchingArchivedNotes = notes.filter((note) => note.isArchived);
+  console.log({ query });
+  console.log({ matchingNotes });
+
+  const matchingUnarchivedNotes = matchingNotes.filter(
+    (note) => !note.isArchived
+  );
+  const matchingArchivedNotes = matchingNotes.filter((note) => note.isArchived);
 
   if (query && matchingNotes.length === 0) {
     return <div className='no-matching-results-text'>No matching results.</div>;
@@ -30,7 +35,9 @@ function Search() {
           onClick={() => openModal(note.id)}
         />
       ))}
-      <div className='note-list-header'>Archive</div>
+      {matchingArchivedNotes?.length > 0 && (
+        <div className='note-list-header'>Archive</div>
+      )}
       {matchingArchivedNotes.map((note) => (
         <NoteViewCard
           key={note.id}
