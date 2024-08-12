@@ -6,7 +6,8 @@ export const BLANK_NOTE: Note = {
   title: '',
   content: '',
   isArchived: false,
-  isPinned: false
+  isPinned: false,
+  isTrashed: false
 };
 
 export const FIVE_SECONDS_IN_MS = 5000;

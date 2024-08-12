@@ -6,6 +6,7 @@ import App from './App.tsx';
 import Archive from './routes/Archive.tsx';
 import Home from './routes/Home.tsx';
 import Search from './routes/Search.tsx';
+import Trash from './routes/Trash.tsx';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: '/search',
         element: <Search />
+      },
+      {
+        path: '/trash',
+        element: <Trash />
       }
       // {
       //   path: '/notes/:noteId',

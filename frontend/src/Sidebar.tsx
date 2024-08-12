@@ -23,6 +23,16 @@ function Sidebar() {
       >
         Archive
       </NavLink>
+      <NavLink
+        to='/trash'
+        aria-label='Trash'
+        className={({ isActive }) =>
+          isActive ? 'sidebar-link active' : 'sidebar-link'
+        }
+        title='Trash'
+      >
+        Trash
+      </NavLink>
     </aside>
   );
 }

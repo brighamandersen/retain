@@ -14,7 +14,7 @@ app.get('/', (_req, res) => {
 });
 
 app.post('/notes', async (req, res) => {
-  const { title, content, isArchived, isPinned } = req.body;
+  const { title, content, isArchived, isPinned, isTrashed } = req.body;
 
   if (!title && !content) {
     return res.status(400).send('Title or content are required');
@@ -28,7 +28,8 @@ app.post('/notes', async (req, res) => {
         createTimestamp: dayjs().unix(),
         updateTimestamp: dayjs().unix(),
         isArchived: isArchived || false,
-        isPinned: isPinned || false
+        isPinned: isPinned || false,
+        isTrashed: isTrashed || false
       }
     });
 
