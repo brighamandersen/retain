@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { Note, OutletContext } from './types';
-import { BLANK_NOTE } from './constants';
+import { Note, OutletContext } from '../types';
+import { BLANK_NOTE } from '../constants';
 import AutoResizingTextarea from './AutoResizingTextarea';
 import NoteToolbar from './NoteToolbar';
 
@@ -74,24 +74,35 @@ function NoteCreateCard() {
       />
       {canBeSaved && (
         <NoteToolbar
-          isArchived={newNote.isArchived}
-          isPinned={newNote.isPinned}
-          onArchiveUnarchiveClick={() => {
-            const isArchivedNow = !newNote.isArchived;
-            createNote({ ...newNote, isArchived: isArchivedNow });
-            setToastMessage(isArchivedNow ? 'Note archived' : 'Note created');
-            setNewNote(BLANK_NOTE);
-          }}
-          onPinUnpinClick={() => {
-            const isPinnedNow = !newNote.isPinned;
-            createNote({
-              ...newNote,
-              isPinned: isPinnedNow,
-              ...(isPinnedNow && { isArchived: false })
-            });
-            setToastMessage(isPinnedNow ? 'Note pinned' : 'Note unpinned');
-            setNewNote(BLANK_NOTE);
-          }}
+          buttons={[
+            {
+              label: 'Save',
+              // onClick not needed, handled by form submit
+              type: 'submit'
+            },
+            {
+              label: 'Pin',
+              onClick: () => {
+                createNote({
+                  ...newNote,
+                  isPinned: !newNote.isPinned
+                });
+                setToastMessage('Note pinned');
+                setNewNote(BLANK_NOTE);
+              }
+            },
+            {
+              label: 'Archive',
+              onClick: () => {
+                createNote({
+                  ...newNote,
+                  isArchived: !newNote.isArchived
+                });
+                setToastMessage('Note archived');
+                setNewNote(BLANK_NOTE);
+              }
+            }
+          ]}
         />
       )}
     </form>

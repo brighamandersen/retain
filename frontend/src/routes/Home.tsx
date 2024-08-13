@@ -1,7 +1,7 @@
 import { useOutletContext } from 'react-router-dom';
 import { OutletContext } from '../types';
-import NoteCreateCard from '../NoteCreateCard';
-import NoteViewList from '../NoteViewList';
+import NoteCreateCard from '../components/NoteCreateCard';
+import NoteViewList from '../components/NoteViewList';
 
 function Home() {
   const { notes, openModal } = useOutletContext<OutletContext>();

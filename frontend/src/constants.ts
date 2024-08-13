@@ -13,7 +13,7 @@ export const BLANK_NOTE: Note = {
 export const FIVE_SECONDS_IN_MS = 5000;
 
 export interface ToolbarButton {
-  isVisible: boolean;
+  isVisible?: boolean;
   label: string;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';

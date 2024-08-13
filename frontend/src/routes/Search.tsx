@@ -1,6 +1,6 @@
 import { useOutletContext, useSearchParams } from 'react-router-dom';
 import { OutletContext } from '../types';
-import NoteViewList from '../NoteViewList';
+import NoteViewList from '../components/NoteViewList';
 
 function Search() {
   const { notes, openModal } = useOutletContext<OutletContext>();

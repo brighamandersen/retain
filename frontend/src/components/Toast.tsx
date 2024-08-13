@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { FIVE_SECONDS_IN_MS } from './constants';
+import { FIVE_SECONDS_IN_MS } from '../constants';
 
 interface ToastProps {
   toastMessage: string | null;

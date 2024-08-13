@@ -1,4 +1,4 @@
-import retainIconPng from './assets/retain-icon.png';
+import retainIconPng from '../assets/retain-icon.png';
 import { useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import React from 'react';

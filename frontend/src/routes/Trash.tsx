@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 import { OutletContext } from '../types';
-import NoteViewList from '../NoteViewList';
+import NoteViewList from '../components/NoteViewList';
 
 function Trash() {
   const { notes, openModal } = useOutletContext<OutletContext>();

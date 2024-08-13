@@ -1,11 +1,11 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Note } from './types';
-import NoteModal from './NoteModal';
+import NoteModal from './components/NoteModal';
 import { v4 as uuidv4 } from 'uuid';
-import { API_BASE_URL } from './constants';
-import Navbar from './Navbar';
-import Toast from './Toast';
-import Sidebar from './Sidebar';
+import { API_BASE_URL, ToolbarButton } from './constants';
+import Navbar from './components/Navbar';
+import Toast from './components/Toast';
+import Sidebar from './components/Sidebar';
 import { Outlet } from 'react-router-dom';
 
 function App() {

@@ -1,9 +1,9 @@
-import { Note } from './types';
+import { Note } from '../types';
 import AutoResizingTextarea from './AutoResizingTextarea';
 import dayjs from 'dayjs';
-import NoteToolbar from './NoteToolbar';
 import { useEffect, useState } from 'react';
-import { ToolbarButton } from './constants';
+import { ToolbarButton } from '../constants';
+import NoteToolbar from './NoteToolbar';
 
 interface NoteModalProps {
   closeModal: () => void;
@@ -44,16 +44,16 @@ function NoteModal(props: NoteModalProps) {
     }
   };
 
-  const toolbarButtons: ToolbarButton[] = [
-    {
-      isVisible: !noteDraft.isTrashed,
+  const toolbarButtons: ToolbarButton[] = [];
+  if (!noteDraft.isTrashed) {
+    toolbarButtons.push({
       label: 'Save',
       // onClick not needed, handled by form submit
       type: 'submit'
-    },
-    {
-      isVisible:
-        !noteDraft.isPinned && !noteDraft.isArchived && !noteDraft.isTrashed,
+    });
+  }
+  if (!noteDraft.isPinned && !noteDraft.isArchived && !noteDraft.isTrashed) {
+    toolbarButtons.push({
       label: 'Pin',
       onClick: () => {
         updateNote(originalNote.id!, {
@@ -63,10 +63,10 @@ function NoteModal(props: NoteModalProps) {
         setToastMessage('Note pinned');
         closeModal();
       }
-    },
-    {
-      isVisible:
-        noteDraft.isPinned && !noteDraft.isArchived && !noteDraft.isTrashed,
+    });
+  }
+  if (noteDraft.isPinned && !noteDraft.isArchived && !noteDraft.isTrashed) {
+    toolbarButtons.push({
       label: 'Unpin',
       onClick: () => {
         updateNote(originalNote.id!, {
@@ -76,9 +76,10 @@ function NoteModal(props: NoteModalProps) {
         setToastMessage('Note unpinned');
         closeModal();
       }
-    },
-    {
-      isVisible: !noteDraft.isArchived && !noteDraft.isTrashed,
+    });
+  }
+  if (!noteDraft.isArchived && !noteDraft.isTrashed) {
+    toolbarButtons.push({
       label: 'Archive',
       onClick: () => {
         updateNote(originalNote.id!, {
@@ -88,9 +89,10 @@ function NoteModal(props: NoteModalProps) {
         setToastMessage('Note archived');
         closeModal();
       }
-    },
-    {
-      isVisible: noteDraft.isArchived && !noteDraft.isTrashed,
+    });
+  }
+  if (noteDraft.isArchived && !noteDraft.isTrashed) {
+    toolbarButtons.push({
       label: 'Unarchive',
       onClick: () => {
         updateNote(originalNote.id!, {
@@ -100,9 +102,10 @@ function NoteModal(props: NoteModalProps) {
         setToastMessage('Note unarchived');
         closeModal();
       }
-    },
-    {
-      isVisible: !noteDraft.isTrashed,
+    });
+  }
+  if (!noteDraft.isTrashed) {
+    toolbarButtons.push({
       label: 'Delete',
       onClick: () => {
         updateNote(originalNote.id!, {
@@ -112,9 +115,10 @@ function NoteModal(props: NoteModalProps) {
         setToastMessage('Note trashed');
         closeModal();
       }
-    },
-    {
-      isVisible: noteDraft.isTrashed,
+    });
+  }
+  if (noteDraft.isTrashed) {
+    toolbarButtons.push({
       label: 'Restore',
       onClick: () => {
         updateNote(originalNote.id!, {
@@ -124,20 +128,18 @@ function NoteModal(props: NoteModalProps) {
         setToastMessage('Note restored');
         closeModal();
       }
-    },
-    {
-      isVisible: noteDraft.isTrashed,
+    });
+  }
+  if (noteDraft.isTrashed) {
+    toolbarButtons.push({
       label: 'Delete forever',
       onClick: () => {
         deleteNoteForever(originalNote.id!);
         setToastMessage('Note deleted forever');
         closeModal();
       }
-    }
-  ];
-  const visibleToolbarButtons = toolbarButtons.filter(
-    (button) => button.isVisible
-  );
+    });
+  }
 
   return (
     <div className='note-modal-overlay' onClick={handleOverlayClick}>
@@ -184,19 +186,7 @@ function NoteModal(props: NoteModalProps) {
             </div>
           )}
         </div>
-        <div className='note-toolbar'>
-          {visibleToolbarButtons.map((button) => (
-            <button
-              key={button.label}
-              className='note-toolbar-button'
-              onClick={button.onClick}
-              title={button.label}
-              type={button.type || 'button'}
-            >
-              {button.label}
-            </button>
-          ))}
-        </div>
+        <NoteToolbar buttons={toolbarButtons} />
       </form>
     </div>
   );
