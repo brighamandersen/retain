@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { Note } from './types';
 import NoteModal from './components/NoteModal';
 import { v4 as uuidv4 } from 'uuid';
-import { API_BASE_URL, ToolbarButton } from './constants';
+import { API_BASE_URL } from './constants';
 import Navbar from './components/Navbar';
 import Toast from './components/Toast';
 import Sidebar from './components/Sidebar';
@@ -73,7 +73,8 @@ function App() {
   };
 
   const deleteNoteForever = async (noteId: string) => {
-    setNotes(notes.filter((note) => note.id !== noteId)); // Optimistic update
+    // Local optimistic update
+    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== noteId));
 
     try {
       await fetch(`${API_BASE_URL}/notes/${noteId}`, {
@@ -82,6 +83,21 @@ function App() {
       fetchNotes(); // Refetch to ensure consistency
     } catch (error) {
       console.error('Failed to delete note:', error);
+    }
+  };
+
+  const deleteAllTrashedNotes = async () => {
+    // Local optimistic update
+    setNotes((prevNotes) => prevNotes.filter((note) => !note.isTrashed));
+
+    try {
+      await fetch(`${API_BASE_URL}/notes/trashed`, {
+        method: 'DELETE'
+      });
+      fetchNotes(); // Refetch to ensure consistency
+      setToastMessage('Trash emptied');
+    } catch (error) {
+      console.error('Failed to delete trashed notes:', error);
     }
   };
 
@@ -105,6 +121,7 @@ function App() {
           <Outlet
             context={{
               createNote,
+              deleteAllTrashedNotes,
               notes,
               openModal,
               setToastMessage

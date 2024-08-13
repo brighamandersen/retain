@@ -1,4 +1,9 @@
-import { ToolbarButton } from '../constants';
+export interface ToolbarButton {
+  isVisible?: boolean;
+  label: string;
+  onClick?: () => void;
+  type?: 'button' | 'submit' | 'reset';
+}
 
 interface NoteToolbarProps {
   buttons: ToolbarButton[];

@@ -2,8 +2,7 @@ import { Note } from '../types';
 import AutoResizingTextarea from './AutoResizingTextarea';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { ToolbarButton } from '../constants';
-import NoteToolbar from './NoteToolbar';
+import NoteToolbar, { ToolbarButton } from './NoteToolbar';
 
 interface NoteModalProps {
   closeModal: () => void;

@@ -3,12 +3,15 @@ import { OutletContext } from '../types';
 import NoteViewList from '../components/NoteViewList';
 
 function Trash() {
-  const { notes, openModal } = useOutletContext<OutletContext>();
+  const { deleteAllTrashedNotes, notes, openModal } =
+    useOutletContext<OutletContext>();
 
   const trashedNotes = notes.filter((note) => note.isTrashed);
 
   return (
     <div>
+      <div>Notes in Trash are deleted after 7 days.</div>
+      <button onClick={deleteAllTrashedNotes}>Empty Trash</button>
       {trashedNotes.length === 0 && (
         <div className='no-notes-empty-state-container'>
           <svg viewBox='0 0 24 24' className='no-notes-empty-state-svg'>

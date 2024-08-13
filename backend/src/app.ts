@@ -1,6 +1,7 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import express from 'express';
 import cors from 'cors';
+import cron from 'node-cron';
 import dayjs from 'dayjs';
 
 const PORT = process.env.PORT || 3000;
@@ -109,6 +110,20 @@ app.put('/notes/:id', async (req, res) => {
   }
 });
 
+app.delete('/notes/trashed', async (_req, res) => {
+  try {
+    const { count } = await prisma.note.deleteMany({
+      where: {
+        isTrashed: true
+      }
+    });
+    res.send(`Deleted all ${count} trashed notes`);
+  } catch (error) {
+    console.error('Error deleting all trashed notes', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 app.delete('/notes/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -122,6 +137,23 @@ app.delete('/notes/:id', async (req, res) => {
   } catch (error) {
     console.error('Error deleting note:', error);
     res.status(500).send('Internal Server Error');
+  }
+});
+
+// Runs every night at midnight
+cron.schedule('0 0 * * *', async () => {
+  try {
+    const { count } = await prisma.note.deleteMany({
+      where: {
+        isTrashed: true,
+        updateTimestamp: {
+          lte: dayjs().subtract(7, 'days').unix()
+        }
+      }
+    });
+    console.log(`Deleted ${count} notes trashed over 7 days ago`);
+  } catch (error) {
+    console.error('Error deleting notes trashed over 7 days ago', error);
   }
 });
 
