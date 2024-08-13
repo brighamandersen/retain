@@ -16,7 +16,7 @@ function App() {
   // Create note
   const createNote = async (noteToCreate: Note) => {
     const tempId = uuidv4(); // Will be replaced with refetch
-    setNotes([...notes, { id: tempId, ...noteToCreate }]); // Optimistic update
+    setNotes([{ id: tempId, ...noteToCreate }, ...notes]); // Optimistic update
 
     try {
       await fetch(`${API_BASE_URL}/notes`, {
