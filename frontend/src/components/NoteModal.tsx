@@ -38,10 +38,10 @@ function NoteModal(props: NoteModalProps) {
   };
 
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Only close the modal if the overlay is clicked, not the modal itself
-    if (e.target === e.currentTarget) {
-      handleSaveChanges();
-    }
+    const wasOverlayClicked = e.target === e.currentTarget;
+    if (!wasOverlayClicked) return;
+
+    handleSaveChanges();
   };
 
   const toolbarButtons: ToolbarButton[] = [];

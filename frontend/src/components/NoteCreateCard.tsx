@@ -30,9 +30,7 @@ function NoteCreateCard() {
   const handleBlur = (event: React.FocusEvent<HTMLFormElement>) => {
     const isFocusStillWithinForm =
       !formRef.current || formRef.current.contains(event.relatedTarget as Node);
-    if (isFocusStillWithinForm || !canBeSaved) {
-      return;
-    }
+    if (isFocusStillWithinForm || !canBeSaved) return;
 
     handleSaveNewNote();
   };
