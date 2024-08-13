@@ -1,6 +1,6 @@
 import { useOutletContext, useSearchParams } from 'react-router-dom';
 import { OutletContext } from '../types';
-import NoteViewCard from '../NoteViewCard';
+import NoteViewList from '../NoteViewList';
 
 function Search() {
   const { notes, openModal } = useOutletContext<OutletContext>();
@@ -14,13 +14,12 @@ function Search() {
       (note?.content ?? '').toLowerCase().includes(query.toLowerCase())
   );
 
-  console.log({ query });
-  console.log({ matchingNotes });
-
   const matchingUnarchivedNotes = matchingNotes.filter(
-    (note) => !note.isArchived
+    (note) => !note.isArchived && !note.isTrashed
   );
-  const matchingArchivedNotes = matchingNotes.filter((note) => note.isArchived);
+  const matchingArchivedNotes = matchingNotes.filter(
+    (note) => note.isArchived && !note.isTrashed
+  );
 
   if (query && matchingNotes.length === 0) {
     return <div className='no-matching-results-text'>No matching results.</div>;
@@ -28,23 +27,11 @@ function Search() {
 
   return (
     <div>
-      {matchingUnarchivedNotes.map((note) => (
-        <NoteViewCard
-          key={note.id}
-          note={note}
-          onClick={() => openModal(note.id)}
-        />
-      ))}
+      <NoteViewList notes={matchingUnarchivedNotes} openModal={openModal} />
       {matchingArchivedNotes?.length > 0 && (
         <div className='note-list-header'>Archive</div>
       )}
-      {matchingArchivedNotes.map((note) => (
-        <NoteViewCard
-          key={note.id}
-          note={note}
-          onClick={() => openModal(note.id)}
-        />
-      ))}
+      <NoteViewList notes={matchingArchivedNotes} openModal={openModal} />
     </div>
   );
 }

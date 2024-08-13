@@ -72,7 +72,7 @@ function App() {
     fetchNotes(); // Refetch to ensure consistency
   };
 
-  const deleteNote = async (noteId: string) => {
+  const deleteNoteForever = async (noteId: string) => {
     setNotes(notes.filter((note) => note.id !== noteId)); // Optimistic update
 
     try {
@@ -114,9 +114,9 @@ function App() {
       </main>
       <NoteModal
         closeModal={closeModal}
-        deleteNote={deleteNote}
         isOpen={isModalOpen}
         originalNote={noteOpen}
+        deleteNoteForever={deleteNoteForever}
         setToastMessage={setToastMessage}
         updateNote={updateNote}
       />

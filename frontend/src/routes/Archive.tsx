@@ -1,11 +1,13 @@
 import { useOutletContext } from 'react-router-dom';
 import { OutletContext } from '../types';
-import NoteViewCard from '../NoteViewCard';
+import NoteViewList from '../NoteViewList';
 
 function Archive() {
   const { notes, openModal } = useOutletContext<OutletContext>();
 
-  const archivedNotes = notes.filter((note) => note.isArchived);
+  const archivedNotes = notes.filter(
+    (note) => note.isArchived && !note.isTrashed
+  );
 
   return (
     <div>
@@ -19,13 +21,7 @@ function Archive() {
           </div>
         </div>
       )}
-      {archivedNotes.map((note) => (
-        <NoteViewCard
-          key={note.id}
-          note={note}
-          onClick={() => openModal(note.id)}
-        />
-      ))}
+      <NoteViewList notes={archivedNotes} openModal={openModal} />
     </div>
   );
 }

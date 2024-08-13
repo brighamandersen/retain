@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 import { OutletContext } from '../types';
-import NoteViewCard from '../NoteViewCard';
+import NoteViewList from '../NoteViewList';
 
 function Trash() {
   const { notes, openModal } = useOutletContext<OutletContext>();
@@ -18,13 +18,7 @@ function Trash() {
           <div className='no-notes-empty-state-text'>No notes in trash</div>
         </div>
       )}
-      {trashedNotes.map((note) => (
-        <NoteViewCard
-          key={note.id}
-          note={note}
-          onClick={() => openModal(note.id)}
-        />
-      ))}
+      <NoteViewList notes={trashedNotes} openModal={openModal} />
     </div>
   );
 }

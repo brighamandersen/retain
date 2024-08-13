@@ -3,12 +3,13 @@ import AutoResizingTextarea from './AutoResizingTextarea';
 import dayjs from 'dayjs';
 import NoteToolbar from './NoteToolbar';
 import { useEffect, useState } from 'react';
+import { ToolbarButton } from './constants';
 
 interface NoteModalProps {
   closeModal: () => void;
-  deleteNote(noteId: string): void;
   isOpen: boolean;
   originalNote: Note;
+  deleteNoteForever: (noteId: string) => void;
   setToastMessage: (message: string | null) => void;
   updateNote: (noteId: string, noteUpdates: Partial<Note>) => void;
 }
@@ -16,9 +17,9 @@ interface NoteModalProps {
 function NoteModal(props: NoteModalProps) {
   const {
     closeModal,
-    deleteNote,
     isOpen,
     originalNote,
+    deleteNoteForever,
     setToastMessage,
     updateNote
   } = props;
@@ -43,6 +44,101 @@ function NoteModal(props: NoteModalProps) {
     }
   };
 
+  const toolbarButtons: ToolbarButton[] = [
+    {
+      isVisible: !noteDraft.isTrashed,
+      label: 'Save',
+      // onClick not needed, handled by form submit
+      type: 'submit'
+    },
+    {
+      isVisible:
+        !noteDraft.isPinned && !noteDraft.isArchived && !noteDraft.isTrashed,
+      label: 'Pin',
+      onClick: () => {
+        updateNote(originalNote.id!, {
+          ...noteDraft,
+          isPinned: true
+        });
+        setToastMessage('Note pinned');
+        closeModal();
+      }
+    },
+    {
+      isVisible:
+        noteDraft.isPinned && !noteDraft.isArchived && !noteDraft.isTrashed,
+      label: 'Unpin',
+      onClick: () => {
+        updateNote(originalNote.id!, {
+          ...noteDraft,
+          isPinned: false
+        });
+        setToastMessage('Note unpinned');
+        closeModal();
+      }
+    },
+    {
+      isVisible: !noteDraft.isArchived && !noteDraft.isTrashed,
+      label: 'Archive',
+      onClick: () => {
+        updateNote(originalNote.id!, {
+          ...noteDraft,
+          isArchived: true
+        });
+        setToastMessage('Note archived');
+        closeModal();
+      }
+    },
+    {
+      isVisible: noteDraft.isArchived && !noteDraft.isTrashed,
+      label: 'Unarchive',
+      onClick: () => {
+        updateNote(originalNote.id!, {
+          ...noteDraft,
+          isArchived: false
+        });
+        setToastMessage('Note unarchived');
+        closeModal();
+      }
+    },
+    {
+      isVisible: !noteDraft.isTrashed,
+      label: 'Delete',
+      onClick: () => {
+        updateNote(originalNote.id!, {
+          ...noteDraft,
+          isTrashed: true
+        });
+        setToastMessage('Note trashed');
+        closeModal();
+      }
+    },
+    {
+      isVisible: noteDraft.isTrashed,
+      label: 'Restore',
+      onClick: () => {
+        updateNote(originalNote.id!, {
+          ...noteDraft,
+          isTrashed: false
+        });
+        setToastMessage('Note restored');
+        closeModal();
+      }
+    },
+    {
+      isVisible: noteDraft.isTrashed,
+      label: 'Delete forever',
+      onClick: () => {
+        deleteNoteForever(originalNote.id!);
+        setToastMessage('Note deleted forever');
+        closeModal();
+      }
+    }
+  ];
+  const visibleToolbarButtons = toolbarButtons.filter(
+    (button) => button.isVisible
+  );
+
   return (
     <div className='note-modal-overlay' onClick={handleOverlayClick}>
       <form
@@ -55,6 +151,7 @@ function NoteModal(props: NoteModalProps) {
         <input
           type='text'
           className='note-modal-edit-note-title'
+          disabled={noteDraft.isTrashed}
           value={noteDraft?.title}
           onChange={(e) => {
             setNoteDraft((prevNoteDraft: Note) => ({
@@ -67,6 +164,7 @@ function NoteModal(props: NoteModalProps) {
         />
         <AutoResizingTextarea
           className='note-modal-edit-note-content'
+          disabled={noteDraft.isTrashed}
           value={noteDraft?.content}
           onChange={(e) => {
             setNoteDraft((prevNoteDraft: Note) => ({
@@ -86,36 +184,19 @@ function NoteModal(props: NoteModalProps) {
             </div>
           )}
         </div>
-        <NoteToolbar
-          isArchived={noteDraft.isArchived}
-          isPinned={noteDraft.isPinned}
-          onArchiveUnarchiveClick={() => {
-            const isArchivedNow = !noteDraft.isArchived;
-            updateNote(originalNote.id!, {
-              ...noteDraft,
-              isArchived: isArchivedNow
-            });
-            setToastMessage(
-              isArchivedNow ? 'Note archived' : 'Note unarchived'
-            );
-            closeModal();
-          }}
-          onDeleteClick={() => {
-            deleteNote(originalNote.id!);
-            setToastMessage('Note trashed');
-            closeModal();
-          }}
-          onPinUnpinClick={() => {
-            const isPinnedNow = !noteDraft.isPinned;
-            updateNote(originalNote.id!, {
-              ...noteDraft,
-              isPinned: isPinnedNow,
-              ...(isPinnedNow && { isArchived: false })
-            });
-            setToastMessage(isPinnedNow ? 'Note pinned' : 'Note unpinned');
-            closeModal();
-          }}
-        />
+        <div className='note-toolbar'>
+          {visibleToolbarButtons.map((button) => (
+            <button
+              key={button.label}
+              className='note-toolbar-button'
+              onClick={button.onClick}
+              title={button.label}
+              type={button.type || 'button'}
+            >
+              {button.label}
+            </button>
+          ))}
+        </div>
       </form>
     </div>
   );

@@ -1,14 +1,20 @@
 import { useOutletContext } from 'react-router-dom';
-import NoteViewCard from '../NoteViewCard';
 import { OutletContext } from '../types';
 import NoteCreateCard from '../NoteCreateCard';
+import NoteViewList from '../NoteViewList';
 
 function Home() {
   const { notes, openModal } = useOutletContext<OutletContext>();
 
-  const unarchivedNotes = notes.filter((note) => !note.isArchived);
-  const pinnedNotes = unarchivedNotes.filter((note) => note.isPinned);
-  const unpinnedNotes = unarchivedNotes.filter((note) => !note.isPinned);
+  const unarchivedNotes = notes.filter(
+    (note) => !note.isArchived && !note.isTrashed
+  );
+  const pinnedNotes = unarchivedNotes.filter(
+    (note) => note.isPinned && !note.isTrashed
+  );
+  const unpinnedNotes = unarchivedNotes.filter(
+    (note) => !note.isPinned && !note.isTrashed
+  );
 
   return (
     <div>
@@ -24,23 +30,11 @@ function Home() {
         </div>
       )}
       {pinnedNotes.length > 0 && <div className='note-list-header'>Pinned</div>}
-      {pinnedNotes.map((note) => (
-        <NoteViewCard
-          key={note.id}
-          note={note}
-          onClick={() => openModal(note.id)}
-        />
-      ))}
+      <NoteViewList notes={pinnedNotes} openModal={openModal} />
       {unpinnedNotes.length > 0 && (
         <div className='note-list-header'>Others</div>
       )}
-      {unpinnedNotes.map((note) => (
-        <NoteViewCard
-          key={note.id}
-          note={note}
-          onClick={() => openModal(note.id)}
-        />
-      ))}
+      <NoteViewList notes={unpinnedNotes} openModal={openModal} />
     </div>
   );
 }
