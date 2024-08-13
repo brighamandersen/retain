@@ -425,6 +425,36 @@ textarea:focus {
 
 /* Misc */
 
+.empty-trash-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.empty-trash-notice {
+  color: rgb(32, 33, 36);
+  font-size: 17px;
+  font-style: italic;
+}
+
+.empty-trash-button {
+  background-color: transparent;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-left: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.empty-trash-button:hover {
+  background-color: rgba(60, 64, 67, 0.08);
+}
+
 .invisible {
   opacity: 0;
 }

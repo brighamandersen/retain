@@ -10,8 +10,19 @@ function Trash() {
 
   return (
     <div>
-      <div>Notes in Trash are deleted after 7 days.</div>
-      <button onClick={deleteAllTrashedNotes}>Empty Trash</button>
+      <div className='empty-trash-container'>
+        <div className='empty-trash-notice'>
+          Notes in Trash are deleted after 7 days.
+        </div>
+        {trashedNotes.length > 0 && (
+          <button
+            className='empty-trash-button'
+            onClick={deleteAllTrashedNotes}
+          >
+            Empty Trash
+          </button>
+        )}
+      </div>
       {trashedNotes.length === 0 && (
         <div className='no-notes-empty-state-container'>
           <svg viewBox='0 0 24 24' className='no-notes-empty-state-svg'>
