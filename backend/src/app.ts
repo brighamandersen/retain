@@ -15,7 +15,7 @@ app.get('/', (_req, res) => {
 });
 
 app.post('/notes', async (req, res) => {
-  const { title, content, isArchived, isPinned, isTrashed } = req.body;
+  const { color, content, isArchived, isPinned, isTrashed, title } = req.body;
 
   if (!title && !content) {
     return res.status(400).send('Title or content are required');
@@ -24,13 +24,14 @@ app.post('/notes', async (req, res) => {
   try {
     const note = await prisma.note.create({
       data: {
-        title,
+        color,
         content,
         createTimestamp: dayjs().unix(),
-        updateTimestamp: dayjs().unix(),
         isArchived: isArchived || false,
         isPinned: isPinned || false,
-        isTrashed: isTrashed || false
+        isTrashed: isTrashed || false,
+        title,
+        updateTimestamp: dayjs().unix()
       }
     });
 
@@ -78,7 +79,7 @@ app.get('/notes/:id', async (req, res) => {
 
 app.put('/notes/:id', async (req, res) => {
   const { id } = req.params;
-  const { title, content, isArchived, isPinned, isTrashed } = req.body;
+  const { color, content, isArchived, isPinned, isTrashed, title } = req.body;
 
   try {
     const existingNote = await prisma.note.findUnique({
@@ -94,11 +95,12 @@ app.put('/notes/:id', async (req, res) => {
         id
       },
       data: {
-        title,
+        color,
         content,
         isArchived,
         isPinned,
         isTrashed,
+        title,
         updateTimestamp: dayjs().unix()
       }
     });
