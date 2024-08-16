@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import NoteModal from './components/NoteModal';
 import { v4 as uuidv4 } from 'uuid';
 import { API_BASE_URL } from './constants';
@@ -7,7 +8,6 @@ import Toast from './components/Toast';
 import Sidebar from './components/Sidebar';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import { SavedNote, UnsavedNote } from './types';
-import dayjs from 'dayjs';
 
 function App() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,8 +18,8 @@ function App() {
 
   // Create note
   const createNote = async (noteToCreate: UnsavedNote) => {
+    // Temporary, will be replaced with refetch
     const tempFields = {
-      // Temporary, will be replaced with refetch
       id: uuidv4(),
       createTimestamp: dayjs().unix(),
       updateTimestamp: dayjs().unix()
@@ -39,10 +39,7 @@ function App() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          title: noteToCreate.title,
-          content: noteToCreate.content,
-          isArchived: noteToCreate.isArchived,
-          isPinned: noteToCreate.isPinned
+          ...noteToCreate
         })
       });
       fetchNotes(); // Refetch to ensure consistency
