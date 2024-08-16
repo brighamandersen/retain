@@ -17,6 +17,7 @@ model Note {
   id              String   @id @default(uuid())
   title           String?
   content         String?
+  color           String?
   isArchived      Boolean  @default(false)
   isPinned        Boolean  @default(false)
   isTrashed       Boolean  @default(false)
