@@ -1,16 +1,25 @@
-export interface Note {
-  id?: string; // Can be undefined for unsaved notes
+interface Note {
   title?: string;
   content?: string;
   isArchived: boolean;
   isPinned: boolean;
   isTrashed: boolean;
-  createTimestamp?: number; // Can be undefined for unsaved notes
-  updateTimestamp?: number; // Can be undefined for unsaved notes
+}
+
+export interface UnsavedNote extends Note {
+  id?: string;
+  createTimestamp?: number;
+  updateTimestamp?: number;
+}
+
+export interface SavedNote extends Note {
+  id: string;
+  createTimestamp: number;
+  updateTimestamp: number;
 }
 
 export interface OutletContext {
-  createNote(noteToCreate: Note): void;
+  createNote(noteToCreate: UnsavedNote): void;
   deleteAllTrashedNotes(): void;
   notes: Note[];
   openModal(noteId?: string): void;

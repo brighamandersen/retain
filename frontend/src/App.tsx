@@ -1,25 +1,34 @@
 import { Fragment, useEffect, useState } from 'react';
-import { Note } from './types';
 import NoteModal from './components/NoteModal';
 import { v4 as uuidv4 } from 'uuid';
 import { API_BASE_URL } from './constants';
 import Navbar from './components/Navbar';
 import Toast from './components/Toast';
 import Sidebar from './components/Sidebar';
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
+import { SavedNote, UnsavedNote } from './types';
+import dayjs from 'dayjs';
 
 function App() {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<SavedNote[]>([]);
   const [isFetchingNotes, setIsFetchingNotes] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Create note
-  const createNote = async (noteToCreate: Note) => {
+  const createNote = async (noteToCreate: UnsavedNote) => {
     const tempId = uuidv4(); // Will be replaced with refetch
-    setNotes([{ id: tempId, ...noteToCreate }, ...notes]); // Optimistic update
+    const tempCurrentTimestamp = dayjs().unix();
+    setNotes([
+      {
+        id: tempId,
+        createTimestamp: tempCurrentTimestamp,
+        updateTimestamp: tempCurrentTimestamp,
+        ...noteToCreate
+      },
+      ...notes
+    ]); // Optimistic update
 
     try {
       await fetch(`${API_BASE_URL}/notes`, {
@@ -55,7 +64,7 @@ function App() {
     }
   };
 
-  const updateNote = async (noteId: string, noteUpdates: Partial<Note>) => {
+  const updateNote = async (noteId: string, noteUpdates: UnsavedNote) => {
     // Local optimistic update
     setNotes((prevNotes) =>
       prevNotes.map((note) =>
@@ -105,9 +114,9 @@ function App() {
   };
 
   // Modal
-  const noteOpenId = searchParams.get('noteId');
-  const isModalOpen = Boolean(noteOpenId);
-  const noteOpen = notes.find((note) => note.id === noteOpenId) as Note;
+  const openNoteId = searchParams.get('noteId');
+  const noteOpen = notes.find((note) => note.id === openNoteId);
+  const isModalOpen = Boolean(noteOpen?.id);
   const openModal = (noteId: string) => {
     setSearchParams({ noteId });
   };
@@ -136,14 +145,15 @@ function App() {
           />
         </div>
       </main>
-      <NoteModal
-        closeModal={closeModal}
-        isOpen={isModalOpen}
-        originalNote={noteOpen}
-        deleteNoteForever={deleteNoteForever}
-        setToastMessage={setToastMessage}
-        updateNote={updateNote}
-      />
+      {isModalOpen && (
+        <NoteModal
+          closeModal={closeModal}
+          originalNote={noteOpen as SavedNote}
+          deleteNoteForever={deleteNoteForever}
+          setToastMessage={setToastMessage}
+          updateNote={updateNote}
+        />
+      )}
       <Toast toastMessage={toastMessage} setToastMessage={setToastMessage} />
     </Fragment>
   );

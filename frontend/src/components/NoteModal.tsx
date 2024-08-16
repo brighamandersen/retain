@@ -1,38 +1,30 @@
-import { Note } from '../types';
+import { SavedNote, UnsavedNote } from '../types';
 import AutoResizingTextarea from './AutoResizingTextarea';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import NoteToolbar, { ToolbarButton } from './NoteToolbar';
 
 interface NoteModalProps {
   closeModal: () => void;
-  isOpen: boolean;
-  originalNote: Note;
+  originalNote: SavedNote;
   deleteNoteForever: (noteId: string) => void;
   setToastMessage: (message: string | null) => void;
-  updateNote: (noteId: string, noteUpdates: Partial<Note>) => void;
+  updateNote: (noteId: string, noteUpdates: UnsavedNote) => void;
 }
 
 function NoteModal(props: NoteModalProps) {
   const {
     closeModal,
-    isOpen,
     originalNote,
     deleteNoteForever,
     setToastMessage,
     updateNote
   } = props;
 
-  const [noteDraft, setNoteDraft] = useState<Note>(originalNote);
-
-  useEffect(() => {
-    setNoteDraft(originalNote);
-  }, [originalNote]);
-
-  if (!isOpen || !originalNote || !noteDraft) return null;
+  const [noteDraft, setNoteDraft] = useState<UnsavedNote>(originalNote);
 
   const handleSaveChanges = () => {
-    updateNote(originalNote.id!, noteDraft);
+    updateNote(originalNote.id, noteDraft);
     closeModal();
   };
 
@@ -55,7 +47,7 @@ function NoteModal(props: NoteModalProps) {
     toolbarButtons.push({
       label: 'Pin',
       onClick: () => {
-        updateNote(originalNote.id!, {
+        updateNote(originalNote.id, {
           ...noteDraft,
           isPinned: true
         });
@@ -68,7 +60,7 @@ function NoteModal(props: NoteModalProps) {
     toolbarButtons.push({
       label: 'Unpin',
       onClick: () => {
-        updateNote(originalNote.id!, {
+        updateNote(originalNote.id, {
           ...noteDraft,
           isPinned: false
         });
@@ -81,7 +73,7 @@ function NoteModal(props: NoteModalProps) {
     toolbarButtons.push({
       label: 'Archive',
       onClick: () => {
-        updateNote(originalNote.id!, {
+        updateNote(originalNote.id, {
           ...noteDraft,
           isArchived: true
         });
@@ -94,7 +86,7 @@ function NoteModal(props: NoteModalProps) {
     toolbarButtons.push({
       label: 'Unarchive',
       onClick: () => {
-        updateNote(originalNote.id!, {
+        updateNote(originalNote.id, {
           ...noteDraft,
           isArchived: false
         });
@@ -107,7 +99,7 @@ function NoteModal(props: NoteModalProps) {
     toolbarButtons.push({
       label: 'Delete',
       onClick: () => {
-        updateNote(originalNote.id!, {
+        updateNote(originalNote.id, {
           ...noteDraft,
           isTrashed: true
         });
@@ -120,7 +112,7 @@ function NoteModal(props: NoteModalProps) {
     toolbarButtons.push({
       label: 'Restore',
       onClick: () => {
-        updateNote(originalNote.id!, {
+        updateNote(originalNote.id, {
           ...noteDraft,
           isTrashed: false
         });
@@ -133,7 +125,7 @@ function NoteModal(props: NoteModalProps) {
     toolbarButtons.push({
       label: 'Delete forever',
       onClick: () => {
-        deleteNoteForever(originalNote.id!);
+        deleteNoteForever(originalNote.id);
         setToastMessage('Note deleted forever');
         closeModal();
       }
@@ -155,7 +147,7 @@ function NoteModal(props: NoteModalProps) {
           disabled={noteDraft.isTrashed}
           value={noteDraft?.title}
           onChange={(e) => {
-            setNoteDraft((prevNoteDraft: Note) => ({
+            setNoteDraft((prevNoteDraft) => ({
               ...prevNoteDraft,
               title: e.target.value,
               updateTimestamp: dayjs().unix()
@@ -168,7 +160,7 @@ function NoteModal(props: NoteModalProps) {
           disabled={noteDraft.isTrashed}
           value={noteDraft?.content}
           onChange={(e) => {
-            setNoteDraft((prevNoteDraft: Note) => ({
+            setNoteDraft((prevNoteDraft) => ({
               ...prevNoteDraft,
               content: e.target.value,
               updateTimestamp: dayjs().unix()
