@@ -41,6 +41,12 @@ textarea:focus {
   border-bottom: 1px solid rgb(203, 203, 203);
 }
 
+input:disabled,
+textarea:disabled {
+  background-color: transparent;
+  cursor: not-allowed;
+}
+
 .main-content {
   margin: 0 auto;
   width: 100%;
