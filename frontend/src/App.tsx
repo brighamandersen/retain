@@ -6,9 +6,12 @@ import { API_BASE_URL } from './constants';
 import Navbar from './components/Navbar';
 import Toast from './components/Toast';
 import Sidebar from './components/Sidebar';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 
 function App() {
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [notes, setNotes] = useState<Note[]>([]);
   const [isFetchingNotes, setIsFetchingNotes] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -102,11 +105,15 @@ function App() {
   };
 
   // Modal
-  const [noteOpenId, setNoteOpenId] = useState<string | null>();
-  const noteOpen = notes.find((note) => note.id === noteOpenId) as Note;
+  const noteOpenId = searchParams.get('noteId');
   const isModalOpen = Boolean(noteOpenId);
-  const openModal = (noteId: string) => setNoteOpenId(noteId);
-  const closeModal = () => setNoteOpenId(null);
+  const noteOpen = notes.find((note) => note.id === noteOpenId) as Note;
+  const openModal = (noteId: string) => {
+    setSearchParams({ noteId });
+  };
+  const closeModal = () => {
+    setSearchParams({});
+  };
 
   useEffect(() => {
     fetchNotes();
