@@ -18,14 +18,16 @@ function App() {
 
   // Create note
   const createNote = async (noteToCreate: UnsavedNote) => {
-    const tempId = uuidv4(); // Will be replaced with refetch
-    const tempCurrentTimestamp = dayjs().unix();
+    const tempFields = {
+      // Temporary, will be replaced with refetch
+      id: uuidv4(),
+      createTimestamp: dayjs().unix(),
+      updateTimestamp: dayjs().unix()
+    };
     setNotes([
       {
-        id: tempId,
-        createTimestamp: tempCurrentTimestamp,
-        updateTimestamp: tempCurrentTimestamp,
-        ...noteToCreate
+        ...noteToCreate,
+        ...tempFields
       },
       ...notes
     ]); // Optimistic update
