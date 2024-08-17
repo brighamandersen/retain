@@ -23,7 +23,6 @@ export function getNoteCardDynamicStyles(note?: UnsavedNote | SavedNote) {
   if (!note || !note?.color) return {};
 
   return {
-    backgroundColor: note.color,
-    border: `1px solid ${note.color}`
+    backgroundColor: note.color
   };
 }

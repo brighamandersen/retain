@@ -300,7 +300,7 @@ textarea:disabled {
 }
 
 .note-view-card:hover {
-  border-color: rgb(151, 151, 151);
+  border: 1px solid rgb(151, 151, 151);
 }
 
 .note-view-card-title {
