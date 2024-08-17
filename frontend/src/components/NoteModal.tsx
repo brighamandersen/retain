@@ -3,6 +3,10 @@ import AutoResizingTextarea from './AutoResizingTextarea';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import NoteToolbar, { ToolbarButton } from './NoteToolbar';
+import {
+  generateRandomLightHexColor,
+  getNoteCardDynamicStyles
+} from '../utils';
 
 interface NoteModalProps {
   closeModal: () => void;
@@ -66,6 +70,18 @@ function NoteModal(props: NoteModalProps) {
         });
         setToastMessage('Note unpinned');
         closeModal();
+      }
+    });
+  }
+  if (!noteDraft.isTrashed) {
+    toolbarButtons.push({
+      label: 'Colorize',
+      onClick: () => {
+        setNoteDraft((prevNoteDraft) => ({
+          ...prevNoteDraft,
+          color: generateRandomLightHexColor(),
+          updateTimestamp: dayjs().unix()
+        }));
       }
     });
   }
@@ -140,6 +156,7 @@ function NoteModal(props: NoteModalProps) {
           e.preventDefault();
           handleSaveChanges();
         }}
+        style={getNoteCardDynamicStyles(noteDraft)}
       >
         <input
           type='text'

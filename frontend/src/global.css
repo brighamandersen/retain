@@ -33,6 +33,7 @@ input,
 textarea {
   border: 1px solid transparent; /* So that it doesn't grow when focused */
   outline: none;
+  background-color: inherit;
 }
 
 input:focus,

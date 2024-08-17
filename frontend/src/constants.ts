@@ -1,8 +1,8 @@
-import { Note } from './types';
+import { UnsavedNote } from './types';
 
 export const API_BASE_URL = 'http://localhost:3000';
 
-export const BLANK_NOTE: Note = {
+export const BLANK_NOTE: UnsavedNote = {
   title: '',
   content: '',
   isArchived: false,

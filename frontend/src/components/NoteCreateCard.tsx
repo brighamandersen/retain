@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { Note, OutletContext } from '../types';
+import { OutletContext, UnsavedNote } from '../types';
 import { BLANK_NOTE } from '../constants';
 import AutoResizingTextarea from './AutoResizingTextarea';
 import NoteToolbar from './NoteToolbar';
+import { getNoteCardDynamicStyles } from '../utils';
 
 function NoteCreateCard() {
   const { createNote, setToastMessage } = useOutletContext<OutletContext>();
 
-  const [newNote, setNewNote] = useState<Note>(BLANK_NOTE);
+  const [newNote, setNewNote] = useState<UnsavedNote>(BLANK_NOTE);
 
   const formRef = React.useRef<HTMLFormElement>(null);
   const firstInputRef = React.useRef<HTMLInputElement>(null);
@@ -45,6 +46,7 @@ function NoteCreateCard() {
         handleSaveNewNote();
         firstInputRef.current?.focus(); // Bring focus back to top of form
       }}
+      style={getNoteCardDynamicStyles(newNote)}
     >
       <input
         ref={firstInputRef}
@@ -87,6 +89,20 @@ function NoteCreateCard() {
                 });
                 setToastMessage('Note pinned');
                 setNewNote(BLANK_NOTE);
+              }
+            },
+            {
+              label: 'Colorize',
+              onClick: () => {
+                const hexNumber = Math.floor(Math.random() * 0xffffff)
+                  .toString(16)
+                  .padStart(6, '0');
+                const hex = `#${hexNumber}`;
+
+                setNewNote((prevNewNote) => ({
+                  ...prevNewNote,
+                  color: hex
+                }));
               }
             },
             {

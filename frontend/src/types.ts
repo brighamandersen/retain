@@ -1,9 +1,10 @@
 interface Note {
-  title?: string;
+  color?: string;
   content?: string;
   isArchived: boolean;
   isPinned: boolean;
   isTrashed: boolean;
+  title?: string;
 }
 
 export interface UnsavedNote extends Note {
@@ -21,7 +22,7 @@ export interface SavedNote extends Note {
 export interface OutletContext {
   createNote(noteToCreate: UnsavedNote): void;
   deleteAllTrashedNotes(): void;
-  notes: Note[];
+  notes: SavedNote[];
   openModal(noteId?: string): void;
   setToastMessage(message: string | null): void;
 }
