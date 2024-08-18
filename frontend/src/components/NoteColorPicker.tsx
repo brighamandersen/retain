@@ -16,13 +16,13 @@ function NoteColorPicker(props: NoteColorPickerProps) {
 
   const formRef = React.useRef<HTMLFormElement>(null);
 
-  const handleBlur = (event: React.FocusEvent<HTMLFormElement>) => {
-    const isFocusStillWithinForm =
-      !formRef.current || formRef.current.contains(event.relatedTarget as Node);
-    if (isFocusStillWithinForm) return;
+  // const handleBlur = (event: React.FocusEvent<HTMLFormElement>) => {
+  //   const isFocusStillWithinForm =
+  //     !formRef.current || formRef.current.contains(event.relatedTarget as Node);
+  //   if (isFocusStillWithinForm) return;
 
-    closeColorPicker();
-  };
+  //   closeColorPicker();
+  // };
 
   function getColorOptionClassName(paletteColor: string) {
     let className = 'color-option';
@@ -36,25 +36,27 @@ function NoteColorPicker(props: NoteColorPickerProps) {
   }
 
   return (
-    <form className='note-color-picker' onBlur={handleBlur}>
-      {Object.values(NOTE_COLOR_PALETTE).map((paletteColor) => (
-        <div
-          className={getColorOptionClassName(paletteColor)}
-          style={{ backgroundColor: paletteColor }}
-          onClick={() => onColorOptionClick(paletteColor)}
-        >
-          {activeHexColor === paletteColor && (
-            <svg
-              viewBox='0 0 24 24'
-              focusable='false'
-              className='color-option-active-check-icon'
-            >
-              <path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'></path>
-            </svg>
-          )}
-        </div>
-      ))}
-    </form>
+    <div className='note-color-picker-container'>
+      <div className='note-color-picker'>
+        {Object.values(NOTE_COLOR_PALETTE).map((paletteColor) => (
+          <div
+            className={getColorOptionClassName(paletteColor)}
+            style={{ backgroundColor: paletteColor }}
+            onClick={() => onColorOptionClick(paletteColor)}
+          >
+            {activeHexColor === paletteColor && (
+              <svg
+                viewBox='0 0 24 24'
+                focusable='false'
+                className='color-option-active-check-icon'
+              >
+                <path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'></path>
+              </svg>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 

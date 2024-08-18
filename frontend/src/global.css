@@ -169,11 +169,14 @@ textarea:disabled {
 
 /* NoteColorPicker */
 
+.note-color-picker-container {
+  display: flex;
+  justify-content: center;
+}
+
 .note-color-picker {
-  background: white;
+  background: #ffffff;
   position: absolute;
-  top: 0px;
-  left: 0px;
   display: flex;
   border-radius: 10px;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px;
