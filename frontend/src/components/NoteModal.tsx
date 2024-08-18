@@ -75,7 +75,7 @@ function NoteModal(props: NoteModalProps) {
   }
   if (!noteDraft.isTrashed) {
     toolbarButtons.push({
-      label: 'Colorize',
+      label: 'Change color',
       onClick: () => {
         setIsColorPickerOpen((prevIsColorPickerOpen) => !prevIsColorPickerOpen);
       }
@@ -194,7 +194,6 @@ function NoteModal(props: NoteModalProps) {
         {isColorPickerOpen && (
           <NoteColorPicker
             activeHexColor={noteDraft.color}
-            closeColorPicker={() => setIsColorPickerOpen(false)}
             onColorOptionClick={(hexColor: string) => {
               setNoteDraft((prevNoteDraft) => ({
                 ...prevNoteDraft,

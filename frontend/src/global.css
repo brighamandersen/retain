@@ -97,6 +97,7 @@ textarea:disabled {
   left: 0;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
 
 .navbar-left {
@@ -179,7 +180,7 @@ textarea:disabled {
   position: absolute;
   display: flex;
   border-radius: 10px;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px 0px;
   padding: 8px;
 }
 

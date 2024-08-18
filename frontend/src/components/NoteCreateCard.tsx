@@ -5,11 +5,15 @@ import { BLANK_NOTE } from '../constants';
 import AutoResizingTextarea from './AutoResizingTextarea';
 import NoteToolbar from './NoteToolbar';
 import { getNoteCardDynamicStyles } from '../utils';
+import dayjs from 'dayjs';
+import NoteColorPicker from './NoteColorPicker';
 
 function NoteCreateCard() {
   const { createNote, setToastMessage } = useOutletContext<OutletContext>();
 
   const [newNote, setNewNote] = useState<UnsavedNote>(BLANK_NOTE);
+
+  const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
 
   const formRef = React.useRef<HTMLFormElement>(null);
   const firstInputRef = React.useRef<HTMLInputElement>(null);
@@ -92,17 +96,11 @@ function NoteCreateCard() {
               }
             },
             {
-              label: 'Colorize',
+              label: 'Change color',
               onClick: () => {
-                const hexNumber = Math.floor(Math.random() * 0xffffff)
-                  .toString(16)
-                  .padStart(6, '0');
-                const hex = `#${hexNumber}`;
-
-                setNewNote((prevNewNote) => ({
-                  ...prevNewNote,
-                  color: hex
-                }));
+                setIsColorPickerOpen(
+                  (prevIsColorPickerOpen) => !prevIsColorPickerOpen
+                );
               }
             },
             {
@@ -117,6 +115,18 @@ function NoteCreateCard() {
               }
             }
           ]}
+        />
+      )}
+      {isColorPickerOpen && canBeSaved && (
+        <NoteColorPicker
+          activeHexColor={newNote.color}
+          onColorOptionClick={(hexColor: string) => {
+            setNewNote((prevNewNote) => ({
+              ...prevNewNote,
+              color: hexColor,
+              updateTimestamp: dayjs().unix()
+            }));
+          }}
         />
       )}
     </form>

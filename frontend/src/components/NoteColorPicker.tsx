@@ -1,28 +1,13 @@
-import React from 'react';
 import { NOTE_COLOR_PALETTE } from '../constants';
 
 interface NoteColorPickerProps {
   activeHexColor?: string;
   onColorOptionClick: (hexColor: string) => void;
-  closeColorPicker: () => void;
 }
 
 function NoteColorPicker(props: NoteColorPickerProps) {
-  const {
-    activeHexColor = NOTE_COLOR_PALETTE.default,
-    closeColorPicker,
-    onColorOptionClick
-  } = props;
-
-  const formRef = React.useRef<HTMLFormElement>(null);
-
-  // const handleBlur = (event: React.FocusEvent<HTMLFormElement>) => {
-  //   const isFocusStillWithinForm =
-  //     !formRef.current || formRef.current.contains(event.relatedTarget as Node);
-  //   if (isFocusStillWithinForm) return;
-
-  //   closeColorPicker();
-  // };
+  const { activeHexColor = NOTE_COLOR_PALETTE.default, onColorOptionClick } =
+    props;
 
   function getColorOptionClassName(paletteColor: string) {
     let className = 'color-option';
