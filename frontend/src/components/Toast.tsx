@@ -19,8 +19,16 @@ function Toast(props: ToastProps) {
     }
   }, [toastMessage, setToastMessage]);
 
+  const getToastContainerClassName = () => {
+    let className = 'toast-container';
+    if (!toastMessage) {
+      className += ' invisible';
+    }
+    return className;
+  };
+
   return (
-    <div className={`toast-container ${!toastMessage ? 'invisible' : ''}`}>
+    <div className={getToastContainerClassName()}>
       <div className='toast-text'>{toastMessage}</div>
       <button
         aria-label='Close'
