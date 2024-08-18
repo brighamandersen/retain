@@ -3,10 +3,8 @@ import AutoResizingTextarea from './AutoResizingTextarea';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import NoteToolbar, { ToolbarButton } from './NoteToolbar';
-import {
-  generateRandomLightHexColor,
-  getNoteCardDynamicStyles
-} from '../utils';
+import { getNoteCardDynamicStyles } from '../utils';
+import NoteColorPicker from './NoteColorPicker';
 
 interface NoteModalProps {
   closeModal: () => void;
@@ -26,6 +24,8 @@ function NoteModal(props: NoteModalProps) {
   } = props;
 
   const [noteDraft, setNoteDraft] = useState<UnsavedNote>(originalNote);
+
+  const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
 
   const handleSaveChanges = () => {
     updateNote(originalNote.id, noteDraft);
@@ -77,11 +77,7 @@ function NoteModal(props: NoteModalProps) {
     toolbarButtons.push({
       label: 'Colorize',
       onClick: () => {
-        setNoteDraft((prevNoteDraft) => ({
-          ...prevNoteDraft,
-          color: generateRandomLightHexColor(),
-          updateTimestamp: dayjs().unix()
-        }));
+        setIsColorPickerOpen((prevIsColorPickerOpen) => !prevIsColorPickerOpen);
       }
     });
   }
@@ -195,6 +191,19 @@ function NoteModal(props: NoteModalProps) {
           )}
         </div>
         <NoteToolbar buttons={toolbarButtons} />
+        {isColorPickerOpen && (
+          <NoteColorPicker
+            activeHexColor={noteDraft.color}
+            closeColorPicker={() => setIsColorPickerOpen(false)}
+            onColorOptionClick={(hexColor: string) => {
+              setNoteDraft((prevNoteDraft) => ({
+                ...prevNoteDraft,
+                color: hexColor,
+                updateTimestamp: dayjs().unix()
+              }));
+            }}
+          />
+        )}
       </form>
     </div>
   );

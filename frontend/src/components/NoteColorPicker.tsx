@@ -1,13 +1,28 @@
+import React from 'react';
 import { NOTE_COLOR_PALETTE } from '../constants';
 
-interface ColorPickerCardProps {
+interface NoteColorPickerProps {
   activeHexColor?: string;
-  setActiveHexColor: (hexColor: string) => void;
+  onColorOptionClick: (hexColor: string) => void;
+  closeColorPicker: () => void;
 }
 
-function ColorPickerCard(props: ColorPickerCardProps) {
-  const { activeHexColor = NOTE_COLOR_PALETTE.default, setActiveHexColor } =
-    props;
+function NoteColorPicker(props: NoteColorPickerProps) {
+  const {
+    activeHexColor = NOTE_COLOR_PALETTE.default,
+    closeColorPicker,
+    onColorOptionClick
+  } = props;
+
+  const formRef = React.useRef<HTMLFormElement>(null);
+
+  const handleBlur = (event: React.FocusEvent<HTMLFormElement>) => {
+    const isFocusStillWithinForm =
+      !formRef.current || formRef.current.contains(event.relatedTarget as Node);
+    if (isFocusStillWithinForm) return;
+
+    closeColorPicker();
+  };
 
   function getColorOptionClassName(paletteColor: string) {
     let className = 'color-option';
@@ -21,12 +36,12 @@ function ColorPickerCard(props: ColorPickerCardProps) {
   }
 
   return (
-    <div className='color-picker-card'>
+    <form className='note-color-picker' onBlur={handleBlur}>
       {Object.values(NOTE_COLOR_PALETTE).map((paletteColor) => (
         <div
           className={getColorOptionClassName(paletteColor)}
           style={{ backgroundColor: paletteColor }}
-          onClick={() => setActiveHexColor(paletteColor)}
+          onClick={() => onColorOptionClick(paletteColor)}
         >
           {activeHexColor === paletteColor && (
             <svg
@@ -39,8 +54,8 @@ function ColorPickerCard(props: ColorPickerCardProps) {
           )}
         </div>
       ))}
-    </div>
+    </form>
   );
 }
 
-export default ColorPickerCard;
+export default NoteColorPicker;

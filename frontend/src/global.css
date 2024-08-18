@@ -167,6 +167,51 @@ textarea:disabled {
   flex: 1;
 }
 
+/* NoteColorPicker */
+
+.note-color-picker {
+  background: white;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  border-radius: 10px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px;
+  padding: 8px;
+}
+
+.note-color-picker .color-option {
+  border-radius: 50px;
+  width: 32px;
+  height: 32px;
+  margin: 2px;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.note-color-picker .color-option.color-default {
+  border-color: rgb(224, 224, 224);
+}
+
+.note-color-picker .color-option:hover {
+  border-color: rgba(0, 0, 0, 0.87);
+}
+
+.note-color-picker .color-option.active {
+  border-color: rgb(161, 66, 244);
+}
+
+.note-color-picker .color-option-active-check-icon {
+  background: rgb(161, 66, 244);
+  border-radius: 50%;
+  fill: white;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: -5px;
+  left: 15px;
+}
+
 /* NoteCreateCard */
 
 .note-create-card-container {
@@ -526,49 +571,4 @@ textarea:disabled {
 .pin-note-svg {
   width: 24px;
   height: 24px;
-}
-
-/* FIXME */
-
-.color-picker-card {
-  background: white;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  display: flex;
-  border-radius: 10px;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px;
-  padding: 8px;
-}
-
-.color-picker-card .color-option {
-  border-radius: 50px;
-  width: 32px;
-  height: 32px;
-  margin: 2px;
-  border: 2px solid transparent;
-  position: relative;
-}
-
-.color-picker-card .color-option.color-default {
-  border-color: rgb(224, 224, 224);
-}
-
-.color-picker-card .color-option:hover {
-  border-color: rgba(0, 0, 0, 0.87);
-}
-
-.color-picker-card .color-option.active {
-  border-color: rgb(161, 66, 244);
-}
-
-.color-picker-card .color-option-active-check-icon {
-  background: rgb(161, 66, 244);
-  border-radius: 50%;
-  fill: white;
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  top: -5px;
-  left: 15px;
 }

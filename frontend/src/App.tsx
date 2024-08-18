@@ -8,7 +8,7 @@ import Toast from './components/Toast';
 import Sidebar from './components/Sidebar';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import { SavedNote, UnsavedNote } from './types';
-import ColorPickerCard from './components/ColorPickerCard';
+import NoteColorPicker from './components/NoteColorPicker';
 
 function App() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -128,15 +128,9 @@ function App() {
     fetchNotes();
   }, []);
 
-  const [activeHexColor, setActiveHexColor] = useState<string>('#ffffff');
-
   return (
     <Fragment>
       <Navbar isFetchingNotes={isFetchingNotes} fetchNotes={fetchNotes} />
-      <ColorPickerCard
-        activeHexColor={activeHexColor}
-        setActiveHexColor={setActiveHexColor}
-      />
       <main>
         <Sidebar />
         <div className='main-content'>
