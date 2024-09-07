@@ -8,7 +8,6 @@ import Toast from './components/Toast';
 import Sidebar from './components/Sidebar';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import { SavedNote, UnsavedNote } from './types';
-import NoteColorPicker from './components/NoteColorPicker';
 
 function App() {
   const [searchParams, setSearchParams] = useSearchParams();
