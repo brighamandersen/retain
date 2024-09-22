@@ -26,6 +26,7 @@ function NoteColorPicker(props: NoteColorPickerProps) {
         {Object.values(NOTE_COLOR_PALETTE).map((paletteColor) => (
           <div
             className={getColorOptionClassName(paletteColor)}
+            key={paletteColor}
             style={{ backgroundColor: paletteColor }}
             onClick={() => onColorOptionClick(paletteColor)}
           >
