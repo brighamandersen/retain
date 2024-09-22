@@ -84,6 +84,21 @@ textarea:disabled {
   animation: spin 1s linear infinite;
 }
 
+/* LogoutButton */
+
+.logout-button {
+  border-radius: 4px;
+  color: rgb(95, 99, 104);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px;
+}
+
+.logout-button:hover {
+  background-color: rgba(60, 64, 67, 0.18);
+  color: black;
+}
+
 /* Navbar */
 
 .navbar-container {
@@ -402,32 +417,6 @@ textarea:disabled {
 
 .sidebar-link.active {
   background-color: #feefc3;
-}
-
-/* SyncStatusButton */
-
-.sync-status-button {
-  background-color: transparent;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 48px;
-  width: 48px;
-}
-
-.sync-status-button:hover {
-  background-color: rgba(60, 64, 67, 0.08);
-}
-
-.sync-status-button:hover .refresh-svg {
-  fill: black;
-}
-
-.refresh-svg {
-  width: 24px;
-  height: 24px;
-  fill: rgb(95, 99, 104);
 }
 
 /* Toast */

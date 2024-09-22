@@ -2,18 +2,10 @@ import retainIconPng from '../assets/retain-icon.png';
 import { useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import React from 'react';
-import SyncStatusButton from './SyncStatusButton';
 import { useAuth } from '../useAuth';
 import { API_BASE_URL } from '../constants';
 
-interface NavbarProps {
-  isFetchingNotes: boolean;
-  fetchNotes: () => void;
-}
-
-function Navbar(props: NavbarProps) {
-  const { isFetchingNotes, fetchNotes } = props;
-
+function Navbar() {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -110,11 +102,9 @@ function Navbar(props: NavbarProps) {
         </button>
       </div>
       <div className='navbar-right'>
-        <SyncStatusButton
-          isSyncing={isFetchingNotes}
-          performSync={fetchNotes}
-        />
-        <button onClick={handleLogOutButtonClick}>Log out</button>
+        <button className='logout-button' onClick={handleLogOutButtonClick}>
+          Log out
+        </button>
       </div>
     </nav>
   );
