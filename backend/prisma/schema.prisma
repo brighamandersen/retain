@@ -14,13 +14,14 @@ datasource db {
 }
 
 model User {
-  id                    Int       @id @default(autoincrement())
-  email                 String    @unique
-  password              String
+  id              String   @id @default(uuid())
+  email           String   @unique
+  password        String
 }
 
 model Note {
   id              String   @id @default(uuid())
+  authorId        String
   title           String?
   content         String?
   color           String?
