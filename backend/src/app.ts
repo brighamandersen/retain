@@ -77,10 +77,8 @@ app.post(
           password: await hashPassword(password)
         }
       });
-      console.log('req.session before:', req.session);
 
       req.session.userId = createdUser.id;
-      console.log('req.session after:', req.session);
       res
         .status(201)
         .send({ message: 'Successfully registered', data: createdUser });
@@ -156,7 +154,7 @@ app.post('/logout', (req: Request, res: Response<{ message: string }>) => {
       res.status(500).send({ message: 'Internal Server Error' });
       return;
     }
-    res.clearCookie('connect.sid'); // FIXME: Check if i need this
+    res.clearCookie('connect.sid');
     res.status(200).send({
       message: `User ${userId} logged out successfully`
     });

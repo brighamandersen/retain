@@ -11,11 +11,14 @@ function Login() {
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerConfirmPassword, setRegisterConfirmPassword] = useState('');
 
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLoginButtonClick = async (event: React.FormEvent) => {
     event.preventDefault();
+    setToastMessage(null);
 
     try {
       const response = await fetch(`${API_BASE_URL}/login`, {
@@ -29,6 +32,7 @@ function Login() {
 
       if (!response.ok) {
         console.error('Failed to login:', response);
+        setToastMessage('Failed to login');
         return;
       }
 
@@ -37,14 +41,17 @@ function Login() {
       navigate('/');
     } catch (error) {
       console.error('Network error:', error);
+      setToastMessage('Network error');
     }
   };
 
   const handleRegisterButtonClick = async (event: React.FormEvent) => {
     event.preventDefault();
+    setToastMessage(null);
 
     if (registerPassword !== registerConfirmPassword) {
       console.error('Passwords do not match');
+      setToastMessage('Passwords do not match');
       return;
     }
 
@@ -63,6 +70,7 @@ function Login() {
 
       if (!response.ok) {
         console.error('Failed to register:', response);
+        setToastMessage('Failed to register');
         return;
       }
 
@@ -71,6 +79,7 @@ function Login() {
       navigate('/');
     } catch (error) {
       console.error('Network error:', error);
+      setToastMessage('Network error');
     }
   };
 
@@ -127,6 +136,7 @@ function Login() {
         </label>
         <button type='submit'>Register</button>
       </form>
+      <Toast toastMessage={toastMessage} setToastMessage={setToastMessage} />
     </div>
   );
 }
