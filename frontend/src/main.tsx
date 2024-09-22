@@ -8,7 +8,7 @@ import Home from './routes/Home.tsx';
 import Search from './routes/Search.tsx';
 import Trash from './routes/Trash.tsx';
 import Login from './routes/Login.tsx';
-import ProtectedRoute from './ProtectedRoute.tsx';
+import ProtectedRoute from './routes/ProtectedRoute.tsx';
 import { AuthProvider } from './AuthContext.tsx';
 
 const router = createBrowserRouter([
