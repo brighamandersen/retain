@@ -143,7 +143,7 @@ app.post(
 
 app.post('/logout', (req: Request, res: Response<{ message: string }>) => {
   if (!req.session?.userId) {
-    res.status(401).send({ message: 'No one was logged in' });
+    res.status(200).send({ message: 'Already logged out' });
     return;
   }
 
