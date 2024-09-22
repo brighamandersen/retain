@@ -192,6 +192,7 @@ app.post(
     try {
       const note = await prisma.note.create({
         data: {
+          authorId: req.session.userId!,
           color,
           content,
           createTimestamp: dayjs().unix(),
@@ -214,14 +215,17 @@ app.post(
 app.get(
   '/notes',
   requireAuth,
-  async (_req: Request, res: Response<{ message: string; data?: Note[] }>) => {
+  async (req: Request, res: Response<{ message: string; data?: Note[] }>) => {
     try {
-      const allNotes = await prisma.note.findMany({
+      const allMyNotes = await prisma.note.findMany({
+        where: {
+          authorId: req.session.userId!
+        },
         orderBy: {
           createTimestamp: 'desc'
         }
       });
-      res.send({ message: 'Notes retrieved successfully', data: allNotes });
+      res.send({ message: 'Notes retrieved successfully', data: allMyNotes });
     } catch (error) {
       console.error('Error getting all notes:', error);
       res.status(500).send({ message: 'Internal Server Error' });
@@ -247,6 +251,10 @@ app.get(
 
       if (!note) {
         return res.status(404).send({ message: 'Note not found' });
+      }
+
+      if (note.authorId !== req.session.userId!) {
+        return res.status(403).send({ message: 'Unauthorized' });
       }
 
       res.send({ message: 'Note retrieved successfully', data: note });
@@ -287,6 +295,10 @@ app.put(
         return res.status(404).send({ message: 'Note not found' });
       }
 
+      if (existingNote.authorId !== req.session.userId!) {
+        return res.status(403).send({ message: 'Unauthorized' });
+      }
+
       const updatedNote = await prisma.note.update({
         where: {
           id
@@ -313,10 +325,11 @@ app.put(
 app.delete(
   '/notes/trashed',
   requireAuth,
-  async (_req: Request, res: Response<{ message: string }>) => {
+  async (req: Request, res: Response<{ message: string }>) => {
     try {
       const { count } = await prisma.note.deleteMany({
         where: {
+          authorId: req.session.userId!,
           isTrashed: true
         }
       });
@@ -333,7 +346,22 @@ app.delete(
   requireAuth,
   async (req: Request<{ id: string }>, res: Response<{ message: string }>) => {
     const { id } = req.params;
+
     try {
+      const note = await prisma.note.findUnique({
+        where: {
+          id
+        }
+      });
+
+      if (!note) {
+        return res.status(404).send({ message: 'Note not found' });
+      }
+
+      if (note.authorId !== req.session.userId!) {
+        return res.status(403).send({ message: 'Unauthorized' });
+      }
+
       await prisma.note.delete({
         where: {
           id

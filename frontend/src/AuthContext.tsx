@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState } from 'react';
+import React, { createContext, ReactNode } from 'react';
 import useLocalStorage from './useLocalStorage';
 
 interface AuthContextType {
@@ -12,11 +12,10 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children
 }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // const [isAuthenticated, setIsAuthenticated] = useLocalStorage(
-  // 'isAuthenticated',
-  // false
-  // );
+  const [isAuthenticated, setIsAuthenticated] = useLocalStorage(
+    'isAuthenticated',
+    false
+  );
 
   const login = () => setIsAuthenticated(true);
   const logout = () => setIsAuthenticated(false);
