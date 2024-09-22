@@ -13,6 +13,12 @@ datasource db {
   url      = "file:../db.sqlite3"
 }
 
+model User {
+  id                    Int       @id @default(autoincrement())
+  email                 String    @unique
+  password              String
+}
+
 model Note {
   id              String   @id @default(uuid())
   title           String?

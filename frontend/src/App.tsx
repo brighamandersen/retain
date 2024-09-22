@@ -16,7 +16,6 @@ function App() {
   const [isFetchingNotes, setIsFetchingNotes] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Create note
   const createNote = async (noteToCreate: UnsavedNote) => {
     // Temporary, will be replaced with refetch
     const tempFields = {
@@ -33,31 +32,45 @@ function App() {
     ]); // Optimistic update
 
     try {
-      await fetch(`${API_BASE_URL}/notes`, {
+      const response = await fetch(`${API_BASE_URL}/notes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           ...noteToCreate
-        })
+        }),
+        credentials: 'include'
       });
+
+      if (!response.ok) {
+        console.error('Failed to create note:', response);
+        return;
+      }
+
       fetchNotes(); // Refetch to ensure consistency
     } catch (error) {
-      console.error(error);
+      console.error('Network error:', error);
     }
   };
 
-  // Get notes
   const fetchNotes = async () => {
     try {
       setIsFetchingNotes(true);
 
-      const response = await fetch(`${API_BASE_URL}/notes`);
-      const data = await response.json();
+      const response = await fetch(`${API_BASE_URL}/notes`, {
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        console.error('Failed to fetch notes:', response);
+        return;
+      }
+
+      const { data } = await response.json();
       setNotes(data);
     } catch (error) {
-      console.error(error);
+      console.error('Network error:', error);
     } finally {
       setIsFetchingNotes(false);
     }
@@ -71,16 +84,27 @@ function App() {
       )
     );
 
-    await fetch(`${API_BASE_URL}/notes/${noteId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        ...noteUpdates
-      })
-    });
-    fetchNotes(); // Refetch to ensure consistency
+    try {
+      const response = await fetch(`${API_BASE_URL}/notes/${noteId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ...noteUpdates
+        }),
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        console.error('Failed to update note:', response);
+        return;
+      }
+
+      fetchNotes(); // Refetch to ensure consistency
+    } catch (error) {
+      console.error('Network error:', error);
+    }
   };
 
   const deleteNoteForever = async (noteId: string) => {
@@ -88,12 +112,19 @@ function App() {
     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== noteId));
 
     try {
-      await fetch(`${API_BASE_URL}/notes/${noteId}`, {
-        method: 'DELETE'
+      const response = await fetch(`${API_BASE_URL}/notes/${noteId}`, {
+        method: 'DELETE',
+        credentials: 'include'
       });
+
+      if (!response.ok) {
+        console.error('Failed to delete note:', response);
+        return;
+      }
+
       fetchNotes(); // Refetch to ensure consistency
     } catch (error) {
-      console.error('Failed to delete note:', error);
+      console.error('Network error:', error);
     }
   };
 
@@ -102,13 +133,20 @@ function App() {
     setNotes((prevNotes) => prevNotes.filter((note) => !note.isTrashed));
 
     try {
-      await fetch(`${API_BASE_URL}/notes/trashed`, {
-        method: 'DELETE'
+      const response = await fetch(`${API_BASE_URL}/notes/trashed`, {
+        method: 'DELETE',
+        credentials: 'include'
       });
+
+      if (!response.ok) {
+        console.error('Failed to delete trashed notes:', response);
+        return;
+      }
+
       fetchNotes(); // Refetch to ensure consistency
       setToastMessage('Trash emptied');
     } catch (error) {
-      console.error('Failed to delete trashed notes:', error);
+      console.error('Network error:', error);
     }
   };
 

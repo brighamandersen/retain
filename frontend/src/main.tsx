@@ -7,38 +7,60 @@ import Archive from './routes/Archive.tsx';
 import Home from './routes/Home.tsx';
 import Search from './routes/Search.tsx';
 import Trash from './routes/Trash.tsx';
+import Login from './routes/Login.tsx';
+import ProtectedRoute from './ProtectedRoute.tsx';
+import { AuthProvider } from './AuthContext.tsx';
 
 const router = createBrowserRouter([
+  {
+    path: '/login',
+    element: <Login />
+  },
   {
     path: '/',
     element: <App />,
     children: [
       {
         path: '/',
-        element: <Home />
+        element: (
+          // <ProtectedRoute>
+          <Home />
+          // </ProtectedRoute>
+        )
       },
       {
         path: '/archive',
-        element: <Archive />
+        element: (
+          // <ProtectedRoute>
+          <Archive />
+          // </ProtectedRoute>
+        )
       },
+
       {
         path: '/search',
-        element: <Search />
+        element: (
+          // <ProtectedRoute>
+          <Search />
+          // </ProtectedRoute>
+        )
       },
       {
         path: '/trash',
-        element: <Trash />
+        element: (
+          // <ProtectedRoute>
+          <Trash />
+          // </ProtectedRoute>
+        )
       }
-      // {
-      //   path: '/notes/:noteId',
-      //   element: <NotePage />
-      // }
     ]
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );

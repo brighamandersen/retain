@@ -3,6 +3,8 @@ import { useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import React from 'react';
 import SyncStatusButton from './SyncStatusButton';
+import { useAuth } from '../useAuth';
+import { API_BASE_URL } from '../constants';
 
 interface NavbarProps {
   isFetchingNotes: boolean;
@@ -12,11 +14,12 @@ interface NavbarProps {
 function Navbar(props: NavbarProps) {
   const { isFetchingNotes, fetchNotes } = props;
 
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
   const searchbarRef = useRef<HTMLInputElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') || '';
-
-  const navigate = useNavigate();
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     // Unfocus the searchbar when Enter is pressed
@@ -24,6 +27,26 @@ function Navbar(props: NavbarProps) {
       searchbarRef.current.blur();
     }
   }
+
+  const handleLogOutButtonClick = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/logout`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        console.error('Failed to log out:', response);
+        return;
+      }
+
+      await response.json();
+      logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Network error:', error);
+    }
+  };
 
   return (
     <nav className='navbar-container'>
@@ -91,6 +114,7 @@ function Navbar(props: NavbarProps) {
           isSyncing={isFetchingNotes}
           performSync={fetchNotes}
         />
+        <button onClick={handleLogOutButtonClick}>Log out</button>
       </div>
     </nav>
   );
