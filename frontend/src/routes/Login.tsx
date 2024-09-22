@@ -3,16 +3,14 @@ import { API_BASE_URL } from '../constants';
 import { useAuth } from '../useAuth';
 import { useNavigate } from 'react-router-dom';
 import Toast from '../components/Toast';
+import Navbar from '../components/Navbar';
 
 function Login() {
   const [isOnLogin, setIsOnLogin] = useState(true);
 
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-
-  const [registerEmail, setRegisterEmail] = useState('');
-  const [registerPassword, setRegisterPassword] = useState('');
-  const [registerConfirmPassword, setRegisterConfirmPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -29,7 +27,7 @@ function Login() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+        body: JSON.stringify({ email: email, password: password }),
         credentials: 'include'
       });
 
@@ -52,7 +50,7 @@ function Login() {
     event.preventDefault();
     setToastMessage(null);
 
-    if (registerPassword !== registerConfirmPassword) {
+    if (password !== confirmPassword) {
       console.error('Passwords do not match');
       setToastMessage('Passwords do not match');
       return;
@@ -65,8 +63,8 @@ function Login() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email: registerEmail,
-          password: registerPassword
+          email: email,
+          password: password
         }),
         credentials: 'include'
       });
@@ -88,6 +86,7 @@ function Login() {
 
   return (
     <div className='login-page'>
+      <Navbar />
       <div className='login-card'>
         {isOnLogin ? (
           <>
@@ -98,8 +97,8 @@ function Login() {
                 <input
                   type='email'
                   id='email'
-                  value={loginEmail}
-                  onChange={(e) => setLoginEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
@@ -108,8 +107,8 @@ function Login() {
                 <input
                   type='password'
                   id='password'
-                  value={loginPassword}
-                  onChange={(e) => setLoginPassword(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
@@ -136,8 +135,8 @@ function Login() {
                 <input
                   type='email'
                   id='email'
-                  value={registerEmail}
-                  onChange={(e) => setRegisterEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
@@ -146,8 +145,8 @@ function Login() {
                 <input
                   type='password'
                   id='password'
-                  value={registerPassword}
-                  onChange={(e) => setRegisterPassword(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
@@ -156,8 +155,8 @@ function Login() {
                 <input
                   type='password'
                   id='confirmPassword'
-                  value={registerConfirmPassword}
-                  onChange={(e) => setRegisterConfirmPassword(e.target.value)}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                 />
               </div>

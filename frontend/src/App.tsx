@@ -167,7 +167,7 @@ function App() {
 
   return (
     <Fragment>
-      <Navbar isFetchingNotes={isFetchingNotes} fetchNotes={fetchNotes} />
+      <Navbar />
       <main>
         <Sidebar />
         <div className='main-content'>

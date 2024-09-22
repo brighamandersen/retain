@@ -23,34 +23,34 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: (
-          // <ProtectedRoute>
-          <Home />
-          // </ProtectedRoute>
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
         )
       },
       {
         path: '/archive',
         element: (
-          // <ProtectedRoute>
-          <Archive />
-          // </ProtectedRoute>
+          <ProtectedRoute>
+            <Archive />
+          </ProtectedRoute>
         )
       },
 
       {
         path: '/search',
         element: (
-          // <ProtectedRoute>
-          <Search />
-          // </ProtectedRoute>
+          <ProtectedRoute>
+            <Search />
+          </ProtectedRoute>
         )
       },
       {
         path: '/trash',
         element: (
-          // <ProtectedRoute>
-          <Trash />
-          // </ProtectedRoute>
+          <ProtectedRoute>
+            <Trash />
+          </ProtectedRoute>
         )
       }
     ]

@@ -183,6 +183,7 @@ textarea:disabled {
   left: 0;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: var(--navbar-height);
 }
 
 .navbar-left {
