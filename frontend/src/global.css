@@ -84,7 +84,78 @@ textarea:disabled {
   animation: spin 1s linear infinite;
 }
 
-/* LogoutButton */
+/* Login Page */
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Login Card */
+
+.login-card {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  border: 1px solid rgb(224, 224, 224);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.login-card h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.login-card .input-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.login-card .input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.login-card .input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.login-card .login-register-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+}
+
+.login-card .switch-link {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.login-card .switch-link .link-button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+/* Logout Button */
 
 .logout-button {
   border-radius: 4px;

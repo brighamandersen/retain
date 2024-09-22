@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import Toast from '../components/Toast';
 
 function Login() {
+  const [isOnLogin, setIsOnLogin] = useState(true);
+
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
 
@@ -85,58 +87,96 @@ function Login() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleLoginButtonClick}>
-        <label>
-          Email:
-          <input
-            type='email'
-            value={loginEmail}
-            onChange={(e) => setLoginEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            type='password'
-            value={loginPassword}
-            onChange={(e) => setLoginPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type='submit'>Login</button>
-      </form>
-      <form onSubmit={handleRegisterButtonClick}>
-        <label>
-          Email:
-          <input
-            type='email'
-            value={registerEmail}
-            onChange={(e) => setRegisterEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            type='password'
-            value={registerPassword}
-            onChange={(e) => setRegisterPassword(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Confirm Password:
-          <input
-            type='password'
-            value={registerConfirmPassword}
-            onChange={(e) => setRegisterConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type='submit'>Register</button>
-      </form>
+    <div className='login-page'>
+      <div className='login-card'>
+        {isOnLogin ? (
+          <>
+            <h2>Login</h2>
+            <form onSubmit={handleLoginButtonClick}>
+              <div className='input-group'>
+                <label htmlFor='email'>Email</label>
+                <input
+                  type='email'
+                  id='email'
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className='input-group'>
+                <label htmlFor='password'>Password</label>
+                <input
+                  type='password'
+                  id='password'
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button type='submit' className='login-register-button'>
+                Log In
+              </button>
+            </form>
+            <p className='switch-link'>
+              Don't have an account?{' '}
+              <button
+                onClick={() => setIsOnLogin(false)}
+                className='link-button'
+              >
+                Register here
+              </button>
+            </p>
+          </>
+        ) : (
+          <>
+            <h2>Register</h2>
+            <form onSubmit={handleRegisterButtonClick}>
+              <div className='input-group'>
+                <label htmlFor='email'>Email</label>
+                <input
+                  type='email'
+                  id='email'
+                  value={registerEmail}
+                  onChange={(e) => setRegisterEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className='input-group'>
+                <label htmlFor='password'>Password</label>
+                <input
+                  type='password'
+                  id='password'
+                  value={registerPassword}
+                  onChange={(e) => setRegisterPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div className='input-group'>
+                <label htmlFor='confirmPassword'>Confirm Password</label>
+                <input
+                  type='password'
+                  id='confirmPassword'
+                  value={registerConfirmPassword}
+                  onChange={(e) => setRegisterConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button type='submit' className='login-register-button'>
+                Register
+              </button>
+            </form>
+            <p className='switch-link'>
+              Already have an account?{' '}
+              <button
+                onClick={() => setIsOnLogin(true)}
+                className='link-button'
+              >
+                Log in here
+              </button>
+            </p>
+          </>
+        )}
+      </div>
       <Toast toastMessage={toastMessage} setToastMessage={setToastMessage} />
     </div>
   );
