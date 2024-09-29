@@ -27,6 +27,7 @@ I ended up deciding it was polished enough as is, but if I had more time to keep
 - Custom card ordering
 - Card labels
 - Auto-save
+- Mobile friendliness (currently optimized for desktop)
 
 ### Learnings
 
