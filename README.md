@@ -4,6 +4,14 @@
 
 A clone of the popular online notetaking app, Google Keep
 
+![Home](./docs/home.webp)
+![Archived](./docs/archived.webp)
+![Search](./docs/search.webp)
+![Register](./docs/register.webp)
+![Login](./docs/login.webp)
+![Blank Trash](./docs/blank-trash.webp)
+![Trash](./docs/trash.webp)
+
 ### Motivation for project
 
 I wanted to have a good, solid crud application that I can show off. I also wanted to practice using Express as a backend, and Prisma as an ORM, then having that API interface with a React front end.
