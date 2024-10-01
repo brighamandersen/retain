@@ -1,6 +1,6 @@
 # retain
 
-### Description of project
+### Description
 
 A clone of the popular online notetaking app, Google Keep
 
@@ -12,7 +12,7 @@ A clone of the popular online notetaking app, Google Keep
 ![Blank Trash](./docs/blank-trash.webp)
 ![Trash](./docs/trash.webp)
 
-### Motivation for project
+### Motivation
 
 I wanted to have a good, solid crud application that I can show off. I also wanted to practice using Express as a backend, and Prisma as an ORM, then having that API interface with a React front end.
 
