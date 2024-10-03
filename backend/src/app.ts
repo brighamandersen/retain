@@ -5,6 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import cron from 'node-cron';
 import dayjs from 'dayjs';
+import SQLiteStore from 'connect-sqlite3';
 import { ONE_WEEK_IN_MS } from './constants';
 import './types'; // Must import this so it uses custom express-session SessionData
 import { compareRawToHashedPassword, hashPassword } from './utils';
@@ -21,15 +22,14 @@ if (!process.env.SESSION_KEY) {
 
 const PORT = process.env.PORT || 3001;
 const isProduction = process.env.NODE_ENV === 'production';
-console.log({isProduction})
 const clientUrl = isProduction
   ? 'https://retain.brighamandersen.com'
   : 'http://localhost:5173';
-// const clientUrl = 'https://retain.brighamandersen.com'
+
+const SQLiteStoreInstance = SQLiteStore(session) as any;
 
 const app = express();
 app.use(express.json());
-// app.use(cors({ origin: '*', credentials: true }));
 app.use(cors({ origin: clientUrl, credentials: true }));
 app.use(
   session({
@@ -44,9 +44,14 @@ app.use(
     },
     resave: false,
     saveUninitialized: false,
-    secret: process.env.SESSION_KEY
+    secret: process.env.SESSION_KEY,
+    store: new SQLiteStoreInstance({
+      db: '../db.sqlite3',
+      table: 'Session'
+    })
   })
 );
+
 const prisma = new PrismaClient();
 
 app.post(
