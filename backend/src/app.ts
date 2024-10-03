@@ -39,8 +39,8 @@ app.use(
       httpOnly: true,
       // sameSite: isProduction ? 'strict' : 'lax'
       // sameSite: 'none',
-      // sameSite: isProduction ? 'none' : 'lax'
-      sameSite: 'lax'
+      sameSite: isProduction ? 'none' : 'lax'
+      // sameSite: 'lax'
     },
     resave: false,
     saveUninitialized: false,
