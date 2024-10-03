@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import dayjs from 'dayjs';
+import { hashPassword } from '../src/utils';
 
 const prisma = new PrismaClient();
 
@@ -11,7 +12,7 @@ async function main() {
     const test1User = await prisma.user.create({
       data: {
         email: 'test1@gmail.com',
-        password: 'test1'
+        password: await hashPassword('test1')
       }
     });
 
