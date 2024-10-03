@@ -5,17 +5,27 @@ const prisma = new PrismaClient();
 
 async function main() {
   try {
+    await prisma.user.deleteMany({});
     await prisma.note.deleteMany({});
+
+    const test1User = await prisma.user.create({
+      data: {
+        email: 'test1@gmail.com',
+        password: 'test1'
+      }
+    });
 
     await prisma.note.createMany({
       data: [
         {
+          authorId: test1User.id,
           title: 'Note One',
           content: 'Content of note one',
           createTimestamp: dayjs('2000-12-25').unix(),
           updateTimestamp: dayjs('2000-12-25').unix()
         },
         {
+          authorId: test1User.id,
           title: 'Note Two',
           content: 'Content of note two',
           createTimestamp: dayjs('2000-12-25').unix(),
