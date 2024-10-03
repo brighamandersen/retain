@@ -29,6 +29,8 @@ function Navbar() {
 
       if (!response.ok) {
         console.error('Failed to log out:', response);
+        logout();
+        navigate('/login');
         return;
       }
 
