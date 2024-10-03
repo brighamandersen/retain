@@ -1,6 +1,7 @@
 import { UnsavedNote } from './types';
 
-export const API_BASE_URL = 'http://localhost:3001';
+export const API_BASE_URL = 'https://retain-api.brighamandersen.com';
+// export const API_BASE_URL = 'http://localhost:3001'; // Uncomment this line and comment out the line above to hit local backend endpoints
 
 export const BLANK_NOTE: UnsavedNote = {
   title: '',
