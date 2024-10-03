@@ -15,3 +15,5 @@ npm run dev
 npm i
 npm run db:init
 ```
+
+Make sure to update backend `.env` file. See `.env.example` for an example of the environment variables that need to be set.
