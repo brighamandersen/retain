@@ -20,17 +20,22 @@ if (!process.env.SESSION_KEY) {
 }
 
 const PORT = process.env.PORT || 3001;
+const isProduction = process.env.NODE_ENV === 'production';
+const clientUrl = isProduction
+  ? 'https://retain.brighamandersen.com'
+  : 'http://localhost:5173';
+
 const app = express();
 app.use(express.json());
-// app.use(cors({ origin: '*', credentials: true }));
+app.use(cors({ origin: clientUrl, credentials: true }));
 app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 app.use(
   session({
     cookie: {
       maxAge: ONE_WEEK_IN_MS,
-      secure: false, // FIXME, JUST FOR LOCAL TESTING
+      secure: isProduction,
       httpOnly: true,
-      sameSite: 'lax' // FIXME, just for LOCAL TESTING
+      sameSite: isProduction ? 'strict' : 'lax'
     },
     resave: false,
     saveUninitialized: false,
