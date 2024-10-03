@@ -13,7 +13,6 @@ function App() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [notes, setNotes] = useState<SavedNote[]>([]);
-  const [isFetchingNotes, setIsFetchingNotes] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const createNote = async (noteToCreate: UnsavedNote) => {
@@ -56,8 +55,6 @@ function App() {
 
   const fetchNotes = async () => {
     try {
-      setIsFetchingNotes(true);
-
       const response = await fetch(`${API_BASE_URL}/notes`, {
         credentials: 'include'
       });
@@ -71,8 +68,6 @@ function App() {
       setNotes(data);
     } catch (error) {
       console.error('Network error:', error);
-    } finally {
-      setIsFetchingNotes(false);
     }
   };
 
