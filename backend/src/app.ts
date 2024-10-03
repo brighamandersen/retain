@@ -25,17 +25,21 @@ console.log({isProduction})
 const clientUrl = isProduction
   ? 'https://retain.brighamandersen.com'
   : 'http://localhost:5173';
+// const clientUrl = 'https://retain.brighamandersen.com'
 
 const app = express();
 app.use(express.json());
+// app.use(cors({ origin: '*', credentials: true }));
 app.use(cors({ origin: clientUrl, credentials: true }));
 app.use(
   session({
     cookie: {
       maxAge: ONE_WEEK_IN_MS,
-      secure: isProduction,
+      secure: false,
       httpOnly: true,
       // sameSite: isProduction ? 'strict' : 'lax'
+      // sameSite: 'none',
+      // sameSite: isProduction ? 'none' : 'lax'
       sameSite: 'lax'
     },
     resave: false,
