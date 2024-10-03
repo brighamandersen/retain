@@ -7,6 +7,7 @@
     "start": "ts-node src/app.ts",
     "dev": "nodemon src/app.ts",
     "build": "npx tsc",
+    "deploy": "pm2 start pm2.json",
     "db:init": "npx prisma migrate dev --name init",
     "db:cli": "sqlite3 db.sqlite3",
     "db:gui": "open db.sqlite3",
