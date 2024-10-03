@@ -166,7 +166,7 @@ app.post('/logout', (req: Request, res: Response<{ message: string }>) => {
 });
 
 app.get('/', (_req: Request, res: Response) => {
-  res.send('Welcome to retain api');
+  res.send('Welcome to Retain API');
 });
 
 app.post(
