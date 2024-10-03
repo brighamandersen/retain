@@ -21,6 +21,7 @@ if (!process.env.SESSION_KEY) {
 
 const PORT = process.env.PORT || 3001;
 const isProduction = process.env.NODE_ENV === 'production';
+console.log({isProduction})
 const clientUrl = isProduction
   ? 'https://retain.brighamandersen.com'
   : 'http://localhost:5173';
@@ -34,7 +35,8 @@ app.use(
       maxAge: ONE_WEEK_IN_MS,
       secure: isProduction,
       httpOnly: true,
-      sameSite: isProduction ? 'strict' : 'lax'
+      // sameSite: isProduction ? 'strict' : 'lax'
+      sameSite: 'lax'
     },
     resave: false,
     saveUninitialized: false,
