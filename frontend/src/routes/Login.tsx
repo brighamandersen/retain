@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { API_BASE_URL } from '../constants';
 import { useAuth } from '../useAuth';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Toast from '../components/Toast';
 import Navbar from '../components/Navbar';
 
@@ -14,8 +14,12 @@ function Login() {
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const { login } = useAuth();
+  const { isAuthenticated, login } = useAuth();
   const navigate = useNavigate();
+
+  if (isAuthenticated) {
+    return <Navigate to='/' replace />;
+  }
 
   const handleLoginButtonClick = async (event: React.FormEvent) => {
     event.preventDefault();
