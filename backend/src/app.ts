@@ -22,8 +22,6 @@ if (!process.env.SESSION_KEY) {
 const PORT = process.env.PORT || 3001;
 const isProduction = process.env.NODE_ENV === 'production';
 
-// const SQLiteStoreInstance = SQLiteStore(session) as any;
-
 const app = express();
 app.use(express.json());
 const corsConfig = {
