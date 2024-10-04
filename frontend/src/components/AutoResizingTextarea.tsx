@@ -4,9 +4,10 @@ interface AutoResizingTextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
 
 const AutoResizingTextarea = (props: AutoResizingTextareaProps) => {
-  const { className, value, onChange, ...rest } = props;
+  const { className, onChange, value, ...rest } = props;
 
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  // Create an internal ref if no ref is provided
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,14 +23,20 @@ const AutoResizingTextarea = (props: AutoResizingTextareaProps) => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [value]);
+  }, [textareaRef, value]);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <textarea
       className={`auto-resizing-textarea ${className}`}
+      onChange={onChange}
       ref={textareaRef}
       value={value}
-      onChange={onChange}
       {...rest}
     />
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { OutletContext, UnsavedNote } from '../types';
 import { BLANK_NOTE } from '../constants';
@@ -16,15 +16,8 @@ function NoteCreateCard() {
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
 
   const formRef = React.useRef<HTMLFormElement>(null);
-  const firstInputRef = React.useRef<HTMLInputElement>(null);
 
   const canBeSaved = newNote.title || newNote.content;
-
-  useEffect(() => {
-    if (firstInputRef.current) {
-      firstInputRef.current.focus();
-    }
-  }, []);
 
   const handleSaveNewNote = () => {
     createNote(newNote);
@@ -48,15 +41,11 @@ function NoteCreateCard() {
       onSubmit={(e) => {
         e.preventDefault();
         handleSaveNewNote();
-        firstInputRef.current?.focus(); // Bring focus back to top of form
       }}
       style={getNoteCardDynamicStyles(newNote)}
     >
       <input
-        ref={firstInputRef}
-        type='text'
         className='note-create-card-title'
-        value={newNote.title}
         onChange={(e) =>
           setNewNote((prevNewNote) => ({
             ...prevNewNote,
@@ -64,10 +53,11 @@ function NoteCreateCard() {
           }))
         }
         placeholder='Title'
+        type='text'
+        value={newNote.title}
       />
       <AutoResizingTextarea
         className='note-create-card-content'
-        value={newNote.content}
         onChange={(e) =>
           setNewNote((prevNewNote) => ({
             ...prevNewNote,
@@ -75,6 +65,7 @@ function NoteCreateCard() {
           }))
         }
         placeholder='Take a note...'
+        value={newNote.content}
       />
       {canBeSaved && (
         <NoteToolbar
