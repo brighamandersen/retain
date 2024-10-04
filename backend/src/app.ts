@@ -26,9 +26,9 @@ const app = express();
 app.use(express.json());
 const corsConfig = {
   origin: [
-    '127.0.0.1:5173',
-    'http://localhost:5173',
-    'https://retain.brighamandersen.com'
+    '127.0.0.1:5173', // development
+    'http://localhost:5173', // development
+    'https://retain.brighamandersen.com' // production
   ],
   credentials: true,
   preflightContinue: true,
