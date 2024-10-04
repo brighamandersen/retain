@@ -25,30 +25,45 @@ const isProduction = process.env.NODE_ENV === 'production';
 const clientUrl = isProduction
   ? 'https://retain.brighamandersen.com'
   : 'http://localhost:5173';
+  console.log({ isProduction, clientUrl})
 
-const SQLiteStoreInstance = SQLiteStore(session) as any;
+// const SQLiteStoreInstance = SQLiteStore(session) as any;
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: clientUrl, credentials: true }));
+const corsConfig = { 
+  origin: ['127.0.0.1:5173', 'http://localhost:5173', 'https://retain.brighamandersen.com'],
+  credentials: true,
+   preflightContinue: true, 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'] 
+}
+// app.use(cors({ origin: '*' }));
+app.use(cors(corsConfig));
 app.use(
   session({
     cookie: {
       maxAge: ONE_WEEK_IN_MS,
-      secure: false,
+      secure: isProduction,
       httpOnly: true,
       // sameSite: isProduction ? 'strict' : 'lax'
       // sameSite: 'none',
       sameSite: isProduction ? 'none' : 'lax'
       // sameSite: 'lax'
     },
+    // cookie: { // Use this cookie instead if testing local backend
+    //   maxAge: ONE_WEEK_IN_MS,
+    //   secure: false,
+    //   httpOnly: true,
+    //   sameSite: 'lax'
+    // },
     resave: false,
     saveUninitialized: false,
     secret: process.env.SESSION_KEY,
-    store: new SQLiteStoreInstance({
-      db: '../db.sqlite3',
-      table: 'Session'
-    })
+    // store: new SQLiteStoreInstance({
+    //   db: '../db.sqlite3',
+    //   table: 'Session'
+    // })
   })
 );
 
@@ -407,6 +422,8 @@ cron.schedule('0 0 * * *', async () => {
     console.error('Error deleting notes trashed over 7 days ago', error);
   }
 });
+
+app.options("*", cors(corsConfig));
 
 app.listen(PORT, () => {
   console.log(`App is listening at http://localhost:${PORT}`);
