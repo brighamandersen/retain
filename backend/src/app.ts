@@ -5,7 +5,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import cron from 'node-cron';
 import dayjs from 'dayjs';
-import SQLiteStore from 'connect-sqlite3';
 import { ONE_WEEK_IN_MS } from './constants';
 import './types'; // Must import this so it uses custom express-session SessionData
 import { compareRawToHashedPassword, hashPassword } from './utils';
@@ -22,23 +21,22 @@ if (!process.env.SESSION_KEY) {
 
 const PORT = process.env.PORT || 3001;
 const isProduction = process.env.NODE_ENV === 'production';
-const clientUrl = isProduction
-  ? 'https://retain.brighamandersen.com'
-  : 'http://localhost:5173';
-  console.log({ isProduction, clientUrl})
 
 // const SQLiteStoreInstance = SQLiteStore(session) as any;
 
 const app = express();
 app.use(express.json());
-const corsConfig = { 
-  origin: ['127.0.0.1:5173', 'http://localhost:5173', 'https://retain.brighamandersen.com'],
+const corsConfig = {
+  origin: [
+    '127.0.0.1:5173',
+    'http://localhost:5173',
+    'https://retain.brighamandersen.com'
+  ],
   credentials: true,
-   preflightContinue: true, 
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'] 
-}
-// app.use(cors({ origin: '*' }));
+  preflightContinue: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+};
 app.use(cors(corsConfig));
 app.use(
   session({
@@ -46,24 +44,11 @@ app.use(
       maxAge: ONE_WEEK_IN_MS,
       secure: isProduction,
       httpOnly: true,
-      // sameSite: isProduction ? 'strict' : 'lax'
-      // sameSite: 'none',
       sameSite: isProduction ? 'none' : 'lax'
-      // sameSite: 'lax'
     },
-    // cookie: { // Use this cookie instead if testing local backend
-    //   maxAge: ONE_WEEK_IN_MS,
-    //   secure: false,
-    //   httpOnly: true,
-    //   sameSite: 'lax'
-    // },
     resave: false,
     saveUninitialized: false,
-    secret: process.env.SESSION_KEY,
-    // store: new SQLiteStoreInstance({
-    //   db: '../db.sqlite3',
-    //   table: 'Session'
-    // })
+    secret: process.env.SESSION_KEY
   })
 );
 
@@ -423,7 +408,7 @@ cron.schedule('0 0 * * *', async () => {
   }
 });
 
-app.options("*", cors(corsConfig));
+app.options('*', cors(corsConfig));
 
 app.listen(PORT, () => {
   console.log(`App is listening at http://localhost:${PORT}`);
