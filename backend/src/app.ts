@@ -24,7 +24,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const app = express();
 app.use(express.json());
-const corsConfig = {
+app.use(cors({
   origin: [
     '127.0.0.1:5173', // development
     'http://localhost:5173', // development
@@ -34,8 +34,7 @@ const corsConfig = {
   preflightContinue: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-};
-app.use(cors(corsConfig));
+}));
 app.use(
   session({
     cookie: {
@@ -405,8 +404,6 @@ cron.schedule('0 0 * * *', async () => {
     console.error('Error deleting notes trashed over 7 days ago', error);
   }
 });
-
-app.options('*', cors(corsConfig));
 
 app.listen(PORT, () => {
   console.log(`App is listening at http://localhost:${PORT}`);
