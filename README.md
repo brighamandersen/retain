@@ -4,13 +4,13 @@
 
 A clone of the popular online notetaking app, Google Keep
 
-![Home](./docs/home.webp)
-![Archived](./docs/archived.webp)
-![Search](./docs/search.webp)
-![Register](./docs/register.webp)
-![Login](./docs/login.webp)
-![Blank Trash](./docs/blank-trash.webp)
-![Trash](./docs/trash.webp)
+![Home](./README-assets/home.webp)
+![Archived](./README-assets/archived.webp)
+![Search](./README-assets/search.webp)
+![Register](./README-assets/register.webp)
+![Login](./README-assets/login.webp)
+![Blank Trash](./README-assets/blank-trash.webp)
+![Trash](./README-assets/trash.webp)
 
 ### Motivation
 
