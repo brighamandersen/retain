@@ -1,6 +1,8 @@
 {
-  "apps": {
-    "name": "retain-api",
-    "script": "dist/app.js"
-  }
+  "apps": [
+    {
+      "name": "retain-api",
+      "script": "dist/app.js"
+    }
+  ]
 }
