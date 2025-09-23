@@ -7,7 +7,7 @@ sudo ln -sf /home/brig/code/retain/infra/systemd/retain.service /etc/systemd/sys
 
 sudo ln -sf /home/brig/code/retain/infra/nginx/retain.conf /etc/nginx/conf.d/retain.conf
 
-cd /home/brig/code/retain
+cd /home/brig/code/retain/frontend
 npm run build
 
 sudo systemctl daemon-reload
