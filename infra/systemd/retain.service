@@ -6,10 +6,10 @@ After=network.target
 User=www-data
 Group=www-data
 WorkingDirectory=/home/brig/code/retain
-ExecStart=/home/brig/code/retain/.venv/bin/python3 -m gunicorn -w 1 --bind 0.0.0.0:3001 wsgi:app
+ExecStart=/usr/bin/node /home/brig/code/retain/backend/dist/app.js
 Restart=always
 RestartSec=5
-Environment="PATH=/home/brig/code/retain/.venv/bin:$PATH"
+Environment="PATH=/usr/bin:/usr/local/bin:$PATH"
 
 [Install]
 WantedBy=multi-user.target
