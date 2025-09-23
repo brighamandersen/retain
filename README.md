@@ -12,6 +12,13 @@ A clone of the popular online notetaking app, Google Keep
 ![Blank Trash](./README-assets/blank-trash.webp)
 ![Trash](./README-assets/trash.webp)
 
+### Usage/deployment to production
+
+```
+cd path/to/repo
+./infra/deploy.sh
+```
+
 ### Motivation
 
 I wanted to have a good, solid crud application that I can show off. I also wanted to practice using Express as a backend, and Prisma as an ORM, then having that API interface with a React front end.

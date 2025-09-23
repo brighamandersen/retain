@@ -24,17 +24,19 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const app = express();
 app.use(express.json());
-app.use(cors({
-  origin: [
-    '127.0.0.1:5173', // development
-    'http://localhost:5173', // development
-    'https://retain.brighamandersen.com' // production
-  ],
-  credentials: true,
-  preflightContinue: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-}));
+app.use(
+  cors({
+    origin: [
+      '127.0.0.1:5173', // development
+      'http://localhost:5173', // development
+      'https://retain.brighamandersen.com' // production
+    ],
+    credentials: true,
+    preflightContinue: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  })
+);
 app.use(
   session({
     cookie: {
