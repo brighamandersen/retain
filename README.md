@@ -16,7 +16,7 @@ A clone of the popular online notetaking app, Google Keep
 
 ```
 cd path/to/repo
-./infra/deploy.sh
+./deploy/deploy.sh
 ```
 
 ### Motivation
