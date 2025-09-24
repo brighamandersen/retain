@@ -3,10 +3,12 @@ set -euo pipefail
 
 echo "Deploying retain"
 
-# nginx
+# frontend
 
 cd /home/brig/code/retain/frontend
 npm run build
+
+# nginx
 
 sudo ln -sf /home/brig/code/retain/deploy/nginx/retain.conf /etc/nginx/conf.d/retain.conf
 
