@@ -14,7 +14,7 @@ A clone of the popular online notetaking app, Google Keep
 
 ### Usage/deployment to production
 
-```
+```bash
 cd path/to/repo
 ./deploy/deploy.sh
 ```
