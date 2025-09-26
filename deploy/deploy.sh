@@ -10,14 +10,14 @@ npm run build
 
 # nginx
 
-sudo ln -sf /home/brig/code/retain/deploy/nginx/retain.conf /etc/nginx/conf.d/retain.conf
+sudo ln -sf /home/brig/code/retain/deploy/nginx.conf /etc/nginx/conf.d/retain.conf
 
 sudo nginx -t
 sudo systemctl reload nginx
 
 # systemd
 
-sudo ln -sf /home/brig/code/retain/deploy/systemd/retain.service /etc/systemd/system/retain.service
+sudo ln -sf /home/brig/code/retain/deploy/systemd.service /etc/systemd/system/retain.service
 
 sudo systemctl daemon-reload
 sudo systemctl enable retain.service
