@@ -12,7 +12,7 @@ A clone of the popular online notetaking app, Google Keep
 ![Blank Trash](./README-assets/blank-trash.webp)
 ![Trash](./README-assets/trash.webp)
 
-### Usage/deployment to production
+### Deploying to Production
 
 ```bash
 cd path/to/repo
