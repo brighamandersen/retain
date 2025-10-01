@@ -19,6 +19,8 @@ cd path/to/repo
 ./deploy/deploy.sh
 ```
 
+This will call the deploy scripts in the frontend and backend.
+
 ### Motivation
 
 I wanted to have a good, solid crud application that I can show off. I also wanted to practice using Express as a backend, and Prisma as an ORM, then having that API interface with a React front end.

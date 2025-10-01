@@ -1,0 +1,14 @@
+[Unit]
+Description=retain-api
+After=network.target
+
+[Service]
+User=brig
+Group=brig
+WorkingDirectory=/home/brig/code/retain/backend
+ExecStart=/home/brig/.nvm/versions/node/v20.11.0/bin/node /home/brig/code/retain/backend/dist/app.js
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
